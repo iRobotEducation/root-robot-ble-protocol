@@ -19,6 +19,7 @@
     - [Device 13 - Light Sensors](#device-13---light-sensors)  
     - [Device 14 - Battery](#device-14---battery)  
     - [Device 17 - Touch Sensors](#device-17---touch-sensors)  
+    - [Device 20 - Cliff Sensor](#device-20---cliff-sensor)  
 5. [Example](#example)  
 
 ## Overview
@@ -2015,6 +2016,69 @@ Touch Sensor changed event. The robot sends a Touch Sensor Event whenever one or
         - `FR` - Front Right sensor.
         - `RR` - Rear Right sensor.
         - `RL` - Rear Left sensor.
+
+### Device 20 - Cliff Sensor
+
+#### From Robot
+-------------------------------------------------------------------------------
+
+#### Command 0 - Cliff Event
+
+Cliff detected event. The robot sends a Cliff Event whenever the IR cliff sensor detects the front of the robot is over a cliff or a detected cliff is no longer present.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>0</td>
+    <td>Inc.</td>
+    <td colspan="4">Timestamp</td>
+    <td>Cliff</td>
+    <td colspan="2">Sensor</td>
+    <td colspan="2">Threshold</td>
+    <td colspan="7"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in units of milliseconds.
+- **Byte 7 - Cliff** (uint8_t)
+    - Cliff state. Can be one of 2 values:
+        - `0` - No cliff.
+        - `1` - Cliff.
+- **Bytes 8:9 - Sensor** (uint16_t)
+    - Current cliff sensor value in units of millivolts.
+- **Bytes 10:11 - Threshold** (uint16_t)
+    - Current cliff sensor threshold in units of millivolts.
 
 ## Example
 
