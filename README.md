@@ -988,6 +988,67 @@ Response to Rotate Angle packet sent after robot has finished rotating.
   </tr>
 </table>
 
+#### Command 29 - Motor Stall Event
+
+Motor has stalled event. The robot sends a Motor Stall Event whenever a stall is detected for one of the motors.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>29</td>
+    <td>Inc.</td>
+    <td colspan="4">Timestamp</td>
+    <td>Motor</td>
+    <td>Cause</td>
+    <td colspan="10"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp of Bumper Event in units of milliseconds.
+- **Byte 7 - Motor** (uint8_t)
+    - Stalled motor. Can be one of 3 values:
+        - `0` - Left motor.
+        - `1` - Right motor.
+        - `2` - Marker/eraser motor.
+- **Byte 8 - Cause** (uint8_t)
+    - Cause for motor stall. Can be one of 5 values:
+        - `0` - No stall.
+        - `1` - Overcurrent.
+        - `2` - Undercurrent.
+        - `3` - Underspeed.
+        - `4` - Saturated PID.
+
 ### Device 2 - Marker/Eraser
 
 #### To Robot
