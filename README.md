@@ -234,7 +234,7 @@ Request a response packet with Command 2 and matching ID containing the current 
 
 #### Command 3 - Stop and Reset Robot
 
-Immediately stop the robot and cancel any pending actions. (Same as pressing the robot's nose.)
+Immediately stop the robot and cancel any pending actions. (Same as pressing the stop button in the Root Coding app.)
 
 <table>
   <tr>
