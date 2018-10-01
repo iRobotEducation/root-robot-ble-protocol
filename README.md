@@ -2109,4 +2109,4 @@ Root Robot Bluetooth Low Energy Protocol Documentation is licensed under a Creat
 
 You should have received a copy of the license along with this work. If not, see <http://creativecommons.org/licenses/by/4.0/>
 
-![<http://creativecommons.org/licenses/by/4.0/>](images/CCBY40-88x31.png)
+![images/CCBY40-88x31.png](<http://creativecommons.org/licenses/by/4.0/>)
