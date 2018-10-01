@@ -21,6 +21,7 @@
     - [Device 17 - Touch Sensors](#device-17---touch-sensors)  
     - [Device 20 - Cliff Sensor](#device-20---cliff-sensor)  
 5. [Example](#example)  
+6. [License](#license)
 
 ## Overview
 
@@ -2099,3 +2100,12 @@ Additional information and instructions are documented within the script:
 # ┗━━━┛ ┗━━━┛ ┗━━━┛ 4. Use keyboard arrow keys to drive, CTRL-C to exit
 ###############################################################################
 ```
+
+## License
+
+Root Robot Bluetooth Low Energy Protocol Documentation (c) by Root Robotics, Inc.
+
+Root Robot Bluetooth Low Energy Protocol Documentation is licensed under a
+Creative Commons Attribution 4.0 International License.
+
+You should have received a copy of the license along with this work. If not, see <http://creativecommons.org/licenses/by/4.0/>
