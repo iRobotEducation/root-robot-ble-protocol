@@ -2108,3 +2108,5 @@ Root Robot Bluetooth Low Energy Protocol Documentation (c) by Root Robotics, Inc
 Root Robot Bluetooth Low Energy Protocol Documentation is licensed under a Creative Commons Attribution 4.0 International License.
 
 You should have received a copy of the license along with this work. If not, see <http://creativecommons.org/licenses/by/4.0/>
+
+![Creative Commons Attribution 4.0 International License](images/CCBY40-88x31.png)
