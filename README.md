@@ -86,9 +86,13 @@ The robot is organized into a collection of logical and independent devices. Eac
 
 Each device implements a series of commands. The command number tells each device how to interpret the contents of the payload. Some commands will trigger the robot to send a response packet.
 
-**Incremental ID** (1 byte)
+**Packet ID** (1 byte)
 
-Each device has an identifier that is incremented with every received packet matching the device number. The BLE central manager should increment the ID value in every packet that is sent to a device number. This is used to keep synchronization between the robot and BLE central manager. For packets that request a response from the robot, the response packet will contain the same ID value as the request. This can be used to identify which request a response packet is associated with. An incremental ID of zero will always be accepted and will reset the count. When the unsigned 8-bit incremental ID reaches a value of 255 it should roll over to zero again.
+Each packet has an identifying number that can be used to determine if a packet was lost and/or to match responses to the packets that requested them. There are three values that can be in this packet location:
+- 'Inc.' - An incremental ID managed by the host. This ID number begins at zero and is incremented each time a packet is sent to the robot. When the unsigned 8-bit incremental ID reaches a value of 255 it should roll over to zero again.
+- 'Req.' - The ID from the packet that requested the response. In cases where the packet is a response to a previous request, the packet ID will match the ID from the request. In this way, the first three bytes of a response packet should match the first three bytes of the requesting packet.
+- 'Rob.' - An incremental ID managed by the robot. The robot has it's own internal incremental ID used for messages initiated by the robot (e.g. a bumper event). This ID number is incremented each time a packet is sent from the robot not in response to a request from the host. When this unsigned 8-bit incremental ID reaches a value of 255 it should roll over to zero again.
+Note that an incremental ID of zero will always be accepted and will reset the count.
 
 **Payload** (16 bytes)
 
@@ -269,49 +273,6 @@ Immediately stop the robot and cancel any pending actions. (Same as pressing the
   <tr>
     <td>0</td>
     <td>3</td>
-    <td>Inc.</td>
-    <td colspan="16"></td>
-    <td></td>
-  </tr>
-</table>
-
-#### Command 4 - Get Serial Number
-
-Request a response packet with Command 3 and matching ID containing robot serial number.
-
-<table>
-  <tr>
-    <td>0</td>
-    <td>1</td>
-    <td>2</td>
-    <td>3</td>
-    <td>4</td>
-    <td>5</td>
-    <td>6</td>
-    <td>7</td>
-    <td>8</td>
-    <td>9</td>
-    <td>10</td>
-    <td>11</td>
-    <td>12</td>
-    <td>13</td>
-    <td>14</td>
-    <td>15</td>
-    <td>16</td>
-    <td>17</td>
-    <td>18</td>
-    <td>19</td>
-  </tr>
-  <tr>
-    <th>Dev</th>
-    <th>Cmd</th>
-    <th>ID</th>
-    <th colspan="16">Payload</th>
-    <th>CRC</th>
-  </tr>
-  <tr>
-    <td>0</td>
-    <td>4</td>
     <td>Inc.</td>
     <td colspan="16"></td>
     <td></td>
@@ -550,56 +511,9 @@ Response to Get Robot Name command.
 - **Bytes 3:18 - Name** (string)
     - A UTF-8 encoded, null terminated string containing the name stored on the robot.
 
-#### Command 3 - Get Serial Number Response
-
-Response to Get Serial Number command.
-
-<table>
-  <tr>
-    <td>0</td>
-    <td>1</td>
-    <td>2</td>
-    <td>3</td>
-    <td>4</td>
-    <td>5</td>
-    <td>6</td>
-    <td>7</td>
-    <td>8</td>
-    <td>9</td>
-    <td>10</td>
-    <td>11</td>
-    <td>12</td>
-    <td>13</td>
-    <td>14</td>
-    <td>15</td>
-    <td>16</td>
-    <td>17</td>
-    <td>18</td>
-    <td>19</td>
-  </tr>
-  <tr>
-    <th>Dev</th>
-    <th>Cmd</th>
-    <th>ID</th>
-    <th colspan="16">Payload</th>
-    <th>CRC</th>
-  </tr>
-  <tr>
-    <td>0</td>
-    <td>3</td>
-    <td>Req.</td>
-    <td colspan="12">Serial Number</td>
-    <td colspan="4"></td>
-    <td></td>
-  </tr>
-</table>
-
-- **Bytes 3:14 - Serial Number** (string)
-    - A UTF-8 encoded, null terminated string containing the serial number associated with the robot.
-
 #### Command 4 - Stop Project
 
-An event indicating that the running project should be stopped. This event is typically triggered by the robot nose button.
+An event indicating that the running project should be stopped. This event is typically triggered by pressing the robot nose button.
 
 <table>
   <tr>
@@ -634,7 +548,7 @@ An event indicating that the running project should be stopped. This event is ty
   <tr>
     <td>0</td>
     <td>4</td>
-    <td>Inc.</td>
+    <td>Rob.</td>
     <td colspan="16"></td>
     <td></td>
   </tr>
@@ -1027,7 +941,7 @@ Motor has stalled event. The robot sends a Motor Stall Event whenever a stall is
   <tr>
     <td>1</td>
     <td>29</td>
-    <td>Inc.</td>
+    <td>Rob.</td>
     <td colspan="4">Timestamp</td>
     <td>Motor</td>
     <td>Cause</td>
@@ -1391,7 +1305,7 @@ Detected new color event. The robot sends a Color Sensor Event whenever one of t
   <tr>
     <td>4</td>
     <td>2</td>
-    <td>Inc.</td>
+    <td>Rob.</td>
     <td>Color</td>
     <td>Color</td>
     <td>Color</td>
@@ -1428,7 +1342,7 @@ Detected new color event. The robot sends a Color Sensor Event whenever one of t
   </tr>
 </table>
 
-- **Nibblet 3:34 - Color** (uint4_t)
+- **Nibbles 6:37 - Color** (uint4_t)
     - 32 4-bit identified color values.
     - In order from left to right, sensor 0 to sensor 31.
     - Color can have one of 5 values:
@@ -1774,7 +1688,7 @@ Ambient light changed event. The robot sends a Light Event whenever a new ambien
   <tr>
     <td>13</td>
     <td>0</td>
-    <td>Inc.</td>
+    <td>Rob.</td>
     <td colspan="4">Timestamp</td>
     <td>State</td>
     <td colspan="2">Left</td>
@@ -1885,7 +1799,7 @@ Battery level changed event. The robot sends a Battery Level Event whenever the 
   <tr>
     <td>14</td>
     <td>0</td>
-    <td>Inc.</td>
+    <td>Rob.</td>
     <td colspan="4">Timestamp</td>
     <td colspan="2">Voltage</td>
     <td>Percent</td>
@@ -1996,7 +1910,7 @@ Touch Sensor changed event. The robot sends a Touch Sensor Event whenever one or
   <tr>
     <td>17</td>
     <td>0</td>
-    <td>Inc.</td>
+    <td>Rob.</td>
     <td colspan="4">Timestamp</td>
     <td>State</td>
     <td></td>
@@ -2060,7 +1974,7 @@ Cliff detected event. The robot sends a Cliff Event whenever the IR cliff sensor
   <tr>
     <td>20</td>
     <td>0</td>
-    <td>Inc.</td>
+    <td>Rob.</td>
     <td colspan="4">Timestamp</td>
     <td>Cliff</td>
     <td colspan="2">Sensor</td>
