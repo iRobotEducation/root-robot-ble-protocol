@@ -92,7 +92,7 @@ Each packet has an identifying number that can be used to determine if a packet 
 
 - `Inc.` - An incremental ID managed by the host. This ID number begins at zero and is incremented each time a packet is sent to the robot. When the unsigned 8-bit incremental ID reaches a value of 255 it should roll over to zero again.
 - `Req.` - The ID from the packet that requested the response. In cases where the packet is a response to a previous request, the packet ID will match the ID from the request. In this way, the first three bytes of a response packet should match the first three bytes of the requesting packet.
-- `Rob.` - An incremental ID managed by the robot. The robot has it's own internal incremental ID used for messages initiated by the robot (e.g. a bumper event). This ID number is incremented each time a packet is sent from the robot not in response to a request from the host. When this unsigned 8-bit incremental ID reaches a value of 255 it should roll over to zero again.
+- `Rob.` - An incremental ID managed by the robot. The robot has it's own internal incremental ID used for messages initiated by the robot (e.g. a bumper event). This ID number is incremented each time a packet is sent from the robot not in response to a request from the host. When this unsigned 8-bit incremental ID reaches a value of 255 it will roll over to zero again.
 
 An incremental ID of zero will always be accepted and will reset the count.
 
