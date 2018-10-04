@@ -148,6 +148,55 @@ Each packet sent or received by the robot is defined below, organized by device 
 #### To Robot
 -------------------------------------------------------------------------------
 
+#### Command 0 - Get Versions
+
+Request a response packet with Command 0 and matching ID containing the software and hardware version numbers.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>0</td>
+    <td>Inc.</td>
+    <td>Board</td>
+    <td colspan="15"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Byte 3 - Board** (uint8_t)
+    - The board ID to request version numbers for. Can be one of 2 values:
+        - `0xA5` - Main board.
+        - `0xC6` - Color board.
+
 #### Command 1 - Set Robot Name
 
 Set a new BLE advertising name.
@@ -467,9 +516,82 @@ Request a response packet with Command 11 and matching ID containing a bitfield 
 #### From Robot
 -------------------------------------------------------------------------------
 
+#### Command 0 - Get Versions Response
+
+Response to Get Versions packet.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>0</td>
+    <td>Req.</td>
+    <td>Board</td>
+    <td>FW Maj</td>
+    <td>FW Min</td>
+    <td>HW Maj</td>
+    <td>HW Min</td>
+    <td>Boot Maj</td>
+    <td>Boot Min</td>
+    <td>Proto Maj</td>
+    <td>Proto Min</td>
+    <td colspan="7"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Byte 3 - Board** (uint8_t)
+    - The board ID to return version numbers for. Can be one of 2 values:
+        - `0xA5` - Main board.
+        - `0xC6` - Color board.
+- **Byte 4 - FW Maj** (uint8_t)
+    - Firmware version major number.
+- **Byte 5 - FW Min** (uint8_t)
+    - Firmware version minor number.
+- **Byte 6 - HW Maj** (uint8_t)
+    - Hardware version major number.
+- **Byte 7 - HW Min** (uint8_t)
+    - Hardware version minor number.
+- **Byte 8 - Boot Maj** (uint8_t)
+    - Bootloader version major number.
+- **Byte 9 - Boot Min** (uint8_t)
+    - Bootloader version minor number.
+- **Byte 10 - Proto Maj** (uint8_t)
+    - Protocol version major number.
+- **Byte 11 - Proto Min** (uint8_t)
+    - Protocol version minor number.
+
 #### Command 2 - Get Robot Name Response
 
-Response to Get Robot Name command.
+Response to Get Robot Name packet.
 
 <table>
   <tr>
