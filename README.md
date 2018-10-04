@@ -197,7 +197,7 @@ Request a response packet with Command 0 and matching ID containing the software
         - `0xA5` - Main board.
         - `0xC6` - Color board.
 
-#### Command 1 - Set Robot Name
+#### Command 1 - Set Name
 
 Set a new BLE advertising name.
 
@@ -244,9 +244,9 @@ Set a new BLE advertising name.
     - A UTF-8 encoded string containing the new advertising name for the robot.
     - Name string should be null terminated if less than 16 bytes.
 
-#### Command 2 - Get Robot Name
+#### Command 2 - Get Name
 
-Request a response packet with Command 2 and matching ID containing the current robot name.
+Request a response packet with Command 2 and matching ID containing the current BLE advertising name.
 
 <table>
   <tr>
@@ -287,7 +287,7 @@ Request a response packet with Command 2 and matching ID containing the current 
   </tr>
 </table>
 
-#### Command 3 - Stop and Reset Robot
+#### Command 3 - Stop and Reset
 
 Immediately stop the robot and cancel any pending actions. (Same as pressing the stop button in the Root Coding app.)
 
@@ -470,7 +470,7 @@ Disable BLE notification for events by device on the robot. By default, all even
     - Multiple devices (up to 128) can be disabled with a single command by setting the bits to 1 that match the device numbers to be disabled.
     - **Note: Device 0 cannot be disabled**
 
-#### Command 11 - Query Enabled Events
+#### Command 11 - Get Enabled Events
 
 Request a response packet with Command 11 and matching ID containing a bitfield of the enabled devices.
 
@@ -507,6 +507,49 @@ Request a response packet with Command 11 and matching ID containing a bitfield 
   <tr>
     <td>0</td>
     <td>11</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
+#### Command 14 - Get Serial Number
+
+Request a response packet with Command 14 and matching ID containing the product serial number.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>14</td>
     <td>Inc.</td>
     <td colspan="16"></td>
     <td></td>
@@ -589,9 +632,9 @@ Response to Get Versions packet.
 - **Byte 11 - Proto Min** (uint8_t)
     - Protocol version minor number.
 
-#### Command 2 - Get Robot Name Response
+#### Command 2 - Get Name Response
 
-Response to Get Robot Name packet.
+Response to Get Name packet.
 
 <table>
   <tr>
@@ -633,7 +676,7 @@ Response to Get Robot Name packet.
 </table>
 
 - **Bytes 3:18 - Name** (string)
-    - A UTF-8 encoded, null terminated string containing the name stored on the robot.
+    - A UTF-8 encoded, null terminated string containing the current BLE advertising name.
 
 #### Command 4 - Stop Project
 
@@ -677,6 +720,100 @@ An event indicating that the running project should be stopped. This event is ty
     <td></td>
   </tr>
 </table>
+
+#### Command 11 - Get Enabled Events Response
+
+Response to Get Enabled Events packet.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>11</td>
+    <td>Req.</td>
+    <td colspan="16">Devices Bitfield</td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:18 - Devices Bitfield** (uint128_t)
+    - `1` = enabled, `0` = disabled
+    - This is a 128-bit bitfield representing all devices from Device 0 (LSb) to Device 127 (MSb).
+
+#### Command 14 - Get Serial Number Response
+
+Response to Get Serial Number packet.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>14</td>
+    <td>Req.</td>
+    <td colspan="12">Serial Number</td>
+    <td colspan="4"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:14 - Serial Number** (string)
+    - A UTF-8 encoded string containing the product serial number, 12 bytes in length.
 
 ### Device 1 - Motors
 
