@@ -25,7 +25,7 @@
 
 ## Overview
 
-The Root Robot uses Bluetooth Low Energy (BLE) for communication to other computing devices like computers, tablets, or phones. It presents itself as a BLE peripheral and requires a connection from a BLE central manager to operate. A few properties of the robot can be read from static characteristics, but the bulk of communication is done by exchanging serialized packets through RX and TX characteristics.
+The Root Robot uses Bluetooth Low Energy (BLE) for communication to other computing devices like computers, tablets, or phones. It presents itself as a BLE peripheral and requires a connection from a BLE host to operate. A few properties of the robot can be read from static characteristics, but the bulk of communication is done by exchanging serialized packets through RX and TX characteristics.
 
 You can find more information about BLE [here](https://www.bluetooth.com/specifications/gatt/generic-attributes-overview).
 
@@ -35,7 +35,7 @@ The Root Robot BLE Profile is organized into characteristics nested within servi
 
 1. **Root Identifier service** `48c5d828-ac2a-442d-97a3-0c9822b04979`
 
-This service is used to identify Root Robots and can be used by BLE central mangers that implement scan for devices with service methods. The other services are present on other BLE devices but the Root Identifier Service is unique only to Root Robots. This service is empty and contains no characteristics.
+This service is used to identify Root Robots and can be used by BLE hosts that implement *scan for devices with service* methods. The other services are present on other BLE devices but the Root Identifier Service is unique only to Root Robots. This service is empty and contains no characteristics.
 
 2. **Device Information service** `0000180a-0000-1000-8000-00805f9b34fb`
 
@@ -67,12 +67,12 @@ This service represents an emulated UART port based on the unofficial specificat
     - Send packets for robot to execute to this characteristic.
     - Accepts packets of 20 bytes.
     - Supports *write with response* and *write without response* methods.
-    - If using *write without response* method, it is the central manager's responsibility to allow time for the robot to process the packet.
+    - If using *write without response* method, it is the host's responsibility to allow time for the robot to process the packet.
 - **RX characteristic** `6e400003-b5a3-f393-e0a9-e50e24dcca9e`
     - Listen to this characteristic for events and responses to packets.
     - Sends packets of 20 bytes.
     - Supports *notify* property.
-    - Central manger must subscribe to this characteristic before any data can be received from robot.
+    - BLE hosts must subscribe to this characteristic before any data can be received from robot.
 
 ## Packet Components
 
@@ -283,7 +283,7 @@ Immediately stop the robot and cancel any pending actions. (Same as pressing the
 
 #### Command 6 - Disconnect
 
-Instruct robot to immediately terminate BLE connection. This is sometimes faster than disconnecting from BLE central manager side.
+Instruct robot to immediately terminate BLE connection. This is sometimes faster than disconnecting from BLE host's side.
 
 <table>
   <tr>
@@ -2001,7 +2001,7 @@ Cliff detected event. The robot sends a Cliff Event whenever the IR cliff sensor
 
 Implementing a robot programming environment or full SDK is beyond the scope of this document, however the [robot-driver.sh](examples/robot-driver.sh) shell script demonstrates how to drive a Root robot with the arrow keys on a computer keyboard using the BLE protocol.
 
-It utilizes pre-calculated motor packets with static speeds and checksums. The Incremental ID section for each packet is set to zero. This way each packet resets the ID count and is accepted.
+It utilizes pre-calculated motor packets with static speeds and checksums. The incremental ID section for each packet is set to zero. This way each packet resets the ID count and is accepted.
 
 This script is targeted for a Raspberry Pi (3B, 3B+, Zero W) computer running the Raspian Stretch distribution. However, it should also work on any Linux computer with Bash >4.0, Bluez >5.0, and BLE hardware.
 
