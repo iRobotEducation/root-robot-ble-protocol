@@ -2033,4 +2033,4 @@ You should have received a [copy of the license](CCBy40.License.txt) along with 
 
 Root Robot Bluetooth Low Energy Protocol examples and other software files are licensed under an MIT License.
 
-You should have received a [copy of the license](MIT.license.txt) along with this work.
+You should have received a [copy of the license](MIT.license.md) along with this work.
