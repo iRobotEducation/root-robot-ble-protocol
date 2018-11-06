@@ -2017,7 +2017,9 @@ Additional information and instructions are documented within the script:
 ###############################################################################
 ```
 
-## License
+## Licenses
+
+### Documentation
 
 Root Robot Bluetooth Low Energy Protocol Documentation (c) by Root Robotics, Inc.
 
@@ -2026,3 +2028,9 @@ Root Robot Bluetooth Low Energy Protocol Documentation is licensed under a Creat
 You should have received a [copy of the license](CCBy40.License.txt) along with this work. If not, see <http://creativecommons.org/licenses/by/4.0/>
 
 [![CCBY40](images/CCBY40-88x31.png)](http://creativecommons.org/licenses/by/4.0/)
+
+### Software
+
+Root Robot Bluetooth Low Energy Protocol examples and other software files are licensed under an MIT License.
+
+You should have received a [copy of the license](MIT.license.txt) along with this work.
