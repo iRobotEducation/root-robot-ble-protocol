@@ -21,7 +21,7 @@
     - [Device 17 - Touch Sensors](#device-17---touch-sensors)  
     - [Device 20 - Cliff Sensor](#device-20---cliff-sensor)  
 5. [Example](#example)  
-6. [License](#license)
+6. [Licenses](#Licenses)
 
 ## Overview
 
