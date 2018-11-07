@@ -1219,12 +1219,13 @@ Motor has stalled event. The robot sends a Motor Stall Event whenever a stall is
         - `1` - Right motor.
         - `2` - Marker/eraser motor.
 - **Byte 8 - Cause** (uint8_t)
-    - Cause for motor stall. Can be one of 5 values:
+    - Cause for motor stall. Can be one of 6 values:
         - `0` - No stall.
         - `1` - Overcurrent.
         - `2` - Undercurrent.
         - `3` - Underspeed.
         - `4` - Saturated PID.
+        - `5` - Timeout.
 
 ### Device 2 - Marker/Eraser
 
