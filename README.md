@@ -74,6 +74,41 @@ This service represents an emulated UART port based on the unofficial specificat
     - Supports *notify* property.
     - BLE hosts must subscribe to this characteristic before any data can be received from robot.
 
+### BLE Protocol Version
+
+The current BLE protocol version is `1.1`. A table of supported main-board firmware versions is below:
+
+<table>
+  <tr>
+    <th>Firmware Version</th>
+    <th>Protocol Version</th>
+  </tr>
+  <tr>
+    <td>1.5</td>
+    <td>1.1</td>
+  </tr>
+  <tr>
+    <td>1.4</td>
+    <td>1.0</td>
+  </tr>
+  <tr>
+    <td>1.3</td>
+    <td>1.0</td>
+  </tr>
+  <tr>
+    <td>1.2</td>
+    <td>1.0</td>
+  </tr>
+  <tr>
+    <td>1.1</td>
+    <td>1.0</td>
+  </tr>
+  <tr>
+    <td>1.0</td>
+    <td>1.0</td>
+  </tr>
+</table>
+
 ## Packet Components
 
 The BLE packets for communication with Root are each 20 bytes long and have a consistent structure:
