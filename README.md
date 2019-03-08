@@ -177,6 +177,10 @@ Example packet:
   </tr>
 </table>
 
+### Timestamp
+
+Some packets contain a timestamp in the payload field. This timestamp is the number of milliseconds that have elapsed since the robot powered on, represented by an unsigned 32-bit integer. This timestamp is continuously incremented and only resets when the robot is power cycled.
+
 ## Packet Definitions
 
 Each packet sent or received by the robot is defined below, organized by device number.
