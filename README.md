@@ -84,6 +84,10 @@ The current BLE protocol version is `1.1`. A table of supported main-board firmw
     <th>Protocol Version</th>
   </tr>
   <tr>
+    <td>1.10</td>
+    <td>1.1</td>
+  <tr>
+  <tr>
     <td>1.8</td>
     <td>1.1</td>
   <tr>
