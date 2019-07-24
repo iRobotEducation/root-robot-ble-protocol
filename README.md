@@ -1258,7 +1258,7 @@ Motor has stalled event. The robot sends a Motor Stall Event whenever a stall is
 </table>
 
 - **Bytes 3:6 - Timestamp** (uint32_t)
-    - Timestamp of Bumper Event in units of milliseconds.
+    - Timestamp in units of milliseconds.
 - **Byte 7 - Motor** (uint8_t)
     - Stalled motor. Can be one of 3 values:
         - `0` - Left motor.
@@ -1946,7 +1946,7 @@ Bumper state changed event. The robot sends a Bumper Event whenever one of the b
 </table>
 
 - **Bytes 3:6 - Timestamp** (uint32_t)
-    - Timestamp of Bumper Event in units of milliseconds.
+    - Timestamp in units of milliseconds.
 - **Byte 7 - State** (uint8_t)
     - New bumper state. Can be one of 4 values:
         - `0x00` - No bumpers pressed.
@@ -2007,7 +2007,7 @@ Ambient light changed event. The robot sends a Light Event whenever a new ambien
 </table>
 
 - **Bytes 3:6 - Timestamp** (uint32_t)
-    - Timestamp of Light Event in units of milliseconds.
+    - Timestamp in units of milliseconds.
 - **Byte 7 - State** (uint8_t)
     - New ambient light state. Can be one of 4 values:
         - `4` - Both eyes dark.
