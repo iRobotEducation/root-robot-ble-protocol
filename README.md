@@ -1937,7 +1937,7 @@ Bumper state changed event. The robot sends a Bumper Event whenever one of the b
   <tr>
     <td>12</td>
     <td>0</td>
-    <td>Inc.</td>
+    <td>Evt.</td>
     <td colspan="4">Timestamp</td>
     <td>State</td>
     <td colspan="11"></td>
