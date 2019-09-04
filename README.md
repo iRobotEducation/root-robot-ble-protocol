@@ -465,6 +465,8 @@ Enable BLE notification for events by devices on the robot. By default, all even
 - **Bytes 3:18 - Devices Bitfield** (uint128_t)
     - `1` = enable, `0` = no change
     - This is a 128-bit bitfield representing all devices from Device 0 (LSb) to Device 127 (MSb).
+    - Device 0 is bit 0 of byte 18
+    - Device 127 is bit 7 of byte 3
     - Multiple devices (up to 128) can be enabled with a single command by setting the bits to 1 that match the device numbers to be enabled.
 
 #### Command 9 - Disable Events
@@ -513,6 +515,8 @@ Disable BLE notification for events by device on the robot. By default, all even
 - **Bytes 3:18 - Devices Bitfield** (uint128_t)
     - `1` = disable, `0` = no change
     - This is a 128-bit bitfield representing all devices from Device 0 (LSb) to Device 127 (MSb).
+    - Device 0 is bit 0 of byte 18
+    - Device 127 is bit 7 of byte 3
     - Multiple devices (up to 128) can be disabled with a single command by setting the bits to 1 that match the device numbers to be disabled.
     - **Note: Device 0 cannot be disabled**
 
@@ -813,6 +817,8 @@ Response to Get Enabled Events packet.
 - **Bytes 3:18 - Devices Bitfield** (uint128_t)
     - `1` = enabled, `0` = disabled
     - This is a 128-bit bitfield representing all devices from Device 0 (LSb) to Device 127 (MSb).
+    - Device 0 is bit 0 of byte 18
+    - Device 127 is bit 7 of byte 3
 
 #### Command 14 - Get Serial Number Response
 
