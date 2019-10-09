@@ -1451,7 +1451,7 @@ Set LED cross animation type and color.
 - **Byte 5 - Green** (uint8_t)
     - Brightness level for the green LED channel.
     - Off is `0`, Full brightness is `255`.
-- **Byte 4 - Blue** (uint8_t)
+- **Byte 6 - Blue** (uint8_t)
     - Brightness level for the blue LED channel.
     - Off is `0`, Full brightness is `255`.
 
