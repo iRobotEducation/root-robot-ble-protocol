@@ -1132,6 +1132,62 @@ Rotate in place by a set angle. Robot sends a Rotate Angle Finished response pac
     - Minimum value of -2147483648 `0x80000000`.
     - Maximum value of 2147483647 `0x7FFFFFFF`.
 
+#### Command 27 - Drive Arc
+
+Drive the length of an arc defined by a set angle and radius. Robot sends a Drive ArcFinished response packet with Command 12 and matching ID when finished.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>27</td>
+    <td>Inc.</td>
+    <td colspan="4">Angle</td>
+    <td colspan="4">Radius</td>
+    <td colspan="8"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - Angle** (int32_t)
+    - Angle in units of decidegrees (1/10 of degrees).
+    - Positive values are clockwise, negative values are counterclockwise.
+    - Minimum value of -2147483648 `0x80000000`.
+    - Maximum value of 2147483647 `0x7FFFFFFF`.
+- **Bytes 7:10 - Radius** (int32_t)
+    - Radius in units of millimeters.
+    - Positive values indicate a rotation point to the right of the robot, negative values indicate a rotation point to the left of the robot.
+    - Minimum value of -2147483648 `0x80000000`.
+    - Maximum value of 2147483647 `0x7FFFFFFF`.
+
 #### From Robot
 -------------------------------------------------------------------------------
 
@@ -1215,6 +1271,49 @@ Response to Rotate Angle packet sent after robot has finished rotating or interr
   <tr>
     <td>1</td>
     <td>12</td>
+    <td>Req.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
+#### Command 27 - Drive Arc Finished Response
+
+Response to Drive Arc packet sent after robot has finished driving or interrupted by a new movement command.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>27</td>
     <td>Req.</td>
     <td colspan="16"></td>
     <td></td>
