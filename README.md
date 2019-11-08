@@ -76,13 +76,17 @@ This service represents an emulated UART port based on the unofficial specificat
 
 ### BLE Protocol Version
 
-The current BLE protocol version is `1.1`. A table of supported main-board firmware versions is below:
+The current BLE protocol version is `1.2`. A table of supported main-board firmware versions is below:
 
 <table>
   <tr>
     <th>Firmware Version</th>
     <th>Protocol Version</th>
   </tr>
+    <tr>
+    <td>1.11</td>
+    <td>1.2</td>
+  <tr>
   <tr>
     <td>1.10</td>
     <td>1.1</td>
@@ -1133,7 +1137,7 @@ Rotate in place by a set angle. Robot sends a Rotate Angle Finished response pac
 
 #### Command 8 - Drive Distance Finished Response
 
-Response to Drive Distance packet sent after robot has finished driving.
+Response to Drive Distance packet sent after robot has finished driving or interrupted by a new movement command.
 
 <table>
   <tr>
@@ -1176,7 +1180,7 @@ Response to Drive Distance packet sent after robot has finished driving.
 
 #### Command 12 - Rotate Angle Finished Response
 
-Response to Rotate Angle packet sent after robot has finished rotating.
+Response to Rotate Angle packet sent after robot has finished rotating or interrupted by a new movement command.
 
 <table>
   <tr>
@@ -1339,7 +1343,7 @@ Set the position of the marker/eraser actuator. Robot sends a Marker/Eraser Posi
 
 #### Command 0 - Marker/Eraser Position Finished Response
 
-Response to Set Marker/Eraser Position sent after marker/eraser actuator has finished moving.
+Response to Set Marker/Eraser Position sent after marker/eraser actuator has finished moving or interrupted by a new marker command.
 
 <table>
   <tr>
@@ -1817,7 +1821,7 @@ Speak a text string in robot language. Robot sends a Say Phrase Finished respons
 
 #### Command 0 - Play Note Finished Response
 
-Response to Play Note packet sent after robot has finished playing note.
+Response to Play Note packet sent after robot has finished playing note or interrupted by a new sound command.
 
 <table>
   <tr>
@@ -1860,7 +1864,7 @@ Response to Play Note packet sent after robot has finished playing note.
 
 #### Command 4 - Say Phrase Finished Response
 
-Response to Say Phrase packet sent after robot has finished speaking phrase.
+Response to Say Phrase packet sent after robot has finished speaking phrase or interrupted by a new sound command.
 
 <table>
   <tr>
