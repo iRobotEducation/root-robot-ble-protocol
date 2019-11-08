@@ -610,6 +610,49 @@ Request a response packet with Command 14 and matching ID containing the product
   </tr>
 </table>
 
+#### Command 15 - Get SKU
+
+Request a response packet with Command 15 and matching ID containing the product SKU.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>15</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
 #### From Robot
 -------------------------------------------------------------------------------
 
@@ -870,6 +913,52 @@ Response to Get Serial Number packet.
 
 - **Bytes 3:14 - Serial Number** (string)
     - A UTF-8 encoded string containing the product serial number, 12 bytes in length.
+
+#### Command 15 - Get SKU
+
+Response to Get SKU packet.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>15</td>
+    <td>Req.</td>
+    <td colspan="16">SKU</td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:19 - SKU** (string)
+    - A UTF-8 encoded, null terminated string containing the product SKU.
 
 ### Device 1 - Motors
 
