@@ -1226,6 +1226,62 @@ Rotate in place by a set angle. Robot sends a Rotate Angle Finished response pac
     - Minimum value of -2147483648 `0x80000000`.
     - Maximum value of 2147483647 `0x7FFFFFFF`.
 
+#### Command 13 - Set Gravity Compensation
+
+Set the amount of correction used during vertical driving and when gravity compensation is active.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>13</td>
+    <td>Inc.</td>
+    <td>Active</td>
+    <td colspan="2">Amount</td>
+    <td colspan="13"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Byte 3 - Active** (uint8_t)
+    - Active is one of three values:
+        - `0` - Always off
+        - `1` - Always on
+        - `2` - Enabled when marker is down (default)
+- **Bytes 4:5 - Amount** (uint16_t)
+    - Amount in units of decipercent
+    - Minimum value is 0 for 0% (equivalent to always off)
+    - Maximum value is 3000 for 300%
+    - Default value is 500 for 50%
+
 #### Command 27 - Drive Arc
 
 Drive the length of an arc defined by a set angle and radius. Robot sends a Drive ArcFinished response packet with Command 12 and matching ID when finished.
