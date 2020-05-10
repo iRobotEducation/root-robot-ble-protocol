@@ -2215,6 +2215,52 @@ Bumper state changed event. The robot sends a Bumper Event whenever one of the b
 
 ### Device 13 - Light Sensors
 
+#### To Robot
+-------------------------------------------------------------------------------
+
+#### Command 1 - Get Light Values
+
+Request a response packet with Command 1 and matching ID containing values from the ambient light sensors.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>1</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
 #### From Robot
 -------------------------------------------------------------------------------
 
@@ -2276,6 +2322,59 @@ Ambient light changed event. The robot sends a Light Event whenever a new ambien
 - **Bytes 8:9 - Left** (uint16_t)
     - Left eye ambient light level in units of millivolts.
 - **Bytes 10:11 - Right** (uint16_t)
+    - Right eye ambient light level in units of millivolts.
+
+#### Command 1 - Get Light Values Response
+
+Response to Get Light Values packet.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>1</td>
+    <td>Evt.</td>
+    <td colspan="4">Timestamp</td>
+    <td colspan="2">Left</td>
+    <td colspan="2">Right</td>
+    <td colspan="8"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in units of milliseconds.
+- **Bytes 7:8 - Left** (uint16_t)
+    - Left eye ambient light level in units of millivolts.
+- **Bytes 9:10 - Right** (uint16_t)
     - Right eye ambient light level in units of millivolts.
 
 ### Device 14 - Battery
