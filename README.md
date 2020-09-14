@@ -149,7 +149,7 @@ An incremental ID of zero will always be accepted and will reset the count.
 
 **Payload** (16 bytes)
 
-The content of the packet payload can be up to 16 bytes. Any unused bytes in the payload should be set to zero. Data stored in the payload can be signed or unsigned integers of variable width. Values are always little endian and are packed in a left justified manner on an 8-bit boundary.
+The content of the packet payload can be up to 16 bytes. Any unused bytes in the payload should be set to zero. Data stored in the payload can be signed or unsigned integers of variable width. Values are always big endian and are packed in a left justified manner on an 8-bit boundary.
 
 **Checksum** (1 byte)
 
