@@ -76,12 +76,16 @@ This service represents an emulated UART port based on the unofficial specificat
 
 ### BLE Protocol Version
 
-The current BLE protocol version is `1.2`. A table of supported main-board firmware versions is below:
+The current BLE protocol version is `1.3`. A table of supported main-board firmware versions is below:
 
 <table>
   <tr>
     <th>Firmware Version</th>
     <th>Protocol Version</th>
+  </tr>
+    <tr>
+    <td>3.0</td>
+    <td>1.3</td>
   </tr>
   <tr>
     <td>2.0</td>
