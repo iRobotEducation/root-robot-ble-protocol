@@ -1987,9 +1987,9 @@ Play a frequency from the robot's buzzer. Robot sends a Play Note Finished respo
     - Duration of note in units of milliseconds.
     - A duration of zero cancels any currently playing notes.
 
-#### Command 1 - Stop Note
+#### Command 1 - Stop Sound
 
-Immediately stop any playing note.
+Immediately stop any playing any sound.
 
 <table>
   <tr>
@@ -2077,6 +2077,83 @@ Speak a text string in robot language. Robot sends a Say Phrase Finished respons
     - UTF-8 encoded string with text to speak.
     - String should be null terminated if less than 16 bytes.
 
+#### Command 5 - Play Sweep
+
+Speak a text string in robot language. Robot sends a Say Phrase Finished response packet with Command 4 and matching ID when finished.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>5</td>
+    <td>Inc.</td>
+    <td colspan="4">Start Frequency</td>
+    <td colspan="4">End Frequency</td>
+    <td colspan="2">Duration</td>
+    <td>Attack</td>
+    <td>Release</td>
+    <td>Volume</td>
+    <td>Modulation Type</td>
+    <td>Modulation Rate</td>
+    <td>Append</td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - Start Frequency** (uint32_t)
+    - Frequency to start sweep in units of milli-Hertz.
+- **Bytes 7:10 - End Frequency** (uint32_t)
+    - Frequency to end sweep in units of milli-Hertz.
+- **Bytes 11:12 - Duration** (uint16_t)
+    - Time to play sweep in units of milliseconds.
+- **Byte 13 - Attack** (uint8_t)
+    - Time to ramp volume from zero to maximum in units of milliseconds.
+    - Attack + Release cannot be greater than Duration.
+- **Byte 14 - Release** (uint8_t)
+    - Time to ramp volume from maximum to zero in units of milliseconds.
+    - Attack + Release cannot be greater than Duration.
+- **Byte 15 - Volume** (uint8_t)
+    - Volume from `0` (silent) to `255` (max).
+- **Byte 16 - Modulation Type** (uint8_t)
+    - Modulate a sound property while a tone is playing. Can be one of 4 values:
+        - `0` - Disabled.
+        - `1` - Volume.
+        - `2` - Pulse Width.
+        - `3` - Frequency.
+- **Byte 17 - Modulation Rate** (uint8_t)
+    - Modulation Rate in units of Hertz.
+- **Byte 18 - Append** (uint8_t)
+    - If this byte is non-zero the Sweep will start after the currently playing Sweep is finished, instead of interrupting.
+    - Only one Sweep can be pending, sending more Sweep packets with Append set will overwrite the pending Sweep.
+
 #### From Robot
 -------------------------------------------------------------------------------
 
@@ -2160,6 +2237,49 @@ Response to Say Phrase packet sent after robot has finished speaking phrase or i
   <tr>
     <td>5</td>
     <td>4</td>
+    <td>Req.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
+#### Command 5 - Play Sweep Finished Response
+
+Response to Play Sweep packet sent after robot has finished playing sweep or interrupted by a new sound command.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>5</td>
     <td>Req.</td>
     <td colspan="16"></td>
     <td></td>
