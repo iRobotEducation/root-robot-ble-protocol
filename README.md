@@ -52,7 +52,7 @@ This service contains mostly static information about the Root Robot. It contain
     - Ex. `1.0`
 - **Manufacturer characteristic** `00002a29-0000-1000-8000-00805f9b34fb`
     - Manufacturer name string, 13 bytes in length.
-    - Ex. `Root Robotics`
+    - Ex. `iRobot`
 - **Robot State characteristic** `00008bb6-0000-1000-8000-00805f9b34fb`
     - Bitfield of select robot sensors, 2 bytes in length.
     - MSB - `0b00<Cliff><L_Bump><R_Bump><RL_Touch><RR_Touch><FL_Touch><FR_Touch>`
@@ -71,8 +71,16 @@ This service represents an emulated UART port based on the unofficial specificat
 - **RX characteristic** `6e400003-b5a3-f393-e0a9-e50e24dcca9e`
     - Listen to this characteristic for events and responses to packets.
     - Sends packets of 20 bytes.
-    - Supports *notify* property.
+    - Supports *notify* and *indicate* properties.
     - BLE hosts must subscribe to this characteristic before any data can be received from robot.
+
+4. **Advertising packet**
+
+Before connection, the robot will broadcast an advertising packet and scan response packet that contain the following.
+    - Root Identifier service UUID
+    - Robot name
+    - Robot State State characteristic
+    - Manufacturer Data using manufacturer ID: `0x0600` and containing a string for robot type: ex. `RT1` or `RT0`
 
 ### BLE Protocol Version
 
@@ -2689,7 +2697,7 @@ Additional information and instructions are documented within the script:
 
 ### Documentation
 
-Root Robot Bluetooth Low Energy Protocol Documentation (c) by Root Robotics, Inc.
+Root Robot Bluetooth Low Energy Protocol Documentation (c) by iRobot Corporation.
 
 Root Robot Bluetooth Low Energy Protocol Documentation is licensed under a Creative Commons Attribution 4.0 International License.
 
