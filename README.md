@@ -1296,7 +1296,7 @@ Set the amount of correction used during vertical driving and when gravity compe
 
 #### Command 27 - Drive Arc
 
-Drive the length of an arc defined by a set angle and radius. Robot sends a Drive ArcFinished response packet with Command 12 and matching ID when finished.
+Drive the length of an arc defined by a set angle and radius. Robot sends a Drive Arc Finished response packet with Command 27 and matching ID when finished.
 
 <table>
   <tr>
