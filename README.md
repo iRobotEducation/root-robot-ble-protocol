@@ -1294,6 +1294,148 @@ Set the amount of correction used during vertical driving and when gravity compe
     - Maximum value is 3000 for 300%
     - Default value is 500 for 50%
 
+#### Command 15 - Reset Position
+
+Reset the estimated robot location and orientation to zero. The robot also resets the position when the nose button is pressed, when a Stop and Reset packet is received, and when a new Bluetooth connection is made.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>15</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
+#### Command 16 - Get Position
+
+Request a response packet with estimated robot location and orientation.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>16</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
+#### Command 17 - Navigate to Position
+
+Navigate to an coordinate location with an optional end orientation. Robot sends a Navigate to Position Finished response packet with Command 17 and matching ID when finished.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>17</td>
+    <td>Inc.</td>
+    <td colspan="2">X</td>
+    <td colspan="2">Y</td>
+    <td colspan="2">Heading</td>
+    <td colspan="10"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:4 - X** (int16_t)
+    - X coordinate in millimeters.
+- **Bytes 5:6 - Y** (int16_t)
+    - Y coordinate in millimeters.
+- **Bytes 7:8 - Heading** (int16_t)
+    - Final orientation in decidegrees.
+    - Minimum value of `0`.
+    - Maximum value of `3599`.
+    - Set to `-1` to allow robot to choose final orientation.
+
 #### Command 27 - Drive Arc
 
 Drive the length of an arc defined by a set angle and radius. Robot sends a Drive Arc Finished response packet with Command 27 and matching ID when finished.
@@ -1438,6 +1580,119 @@ Response to Rotate Angle packet sent after robot has finished rotating or interr
     <td></td>
   </tr>
 </table>
+
+#### Command 16 - Get Position
+
+Response to Get Position packet with estimated robot location and orientation.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>16</td>
+    <td>Req.</td>
+    <td colspan="4">Timestamp</td>
+    <td colspan="2">X</td>
+    <td colspan="2">Y</td>
+    <td colspan="2">Heading</td>
+    <td colspan="6"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in milliseconds.
+- **Bytes 7:8 - X** (int16_t)
+    - Current X coordinate in millimeters.
+    - Positive X axis extends out the right side of the robot from its initial starting position.
+- **Bytes 9:10 - Y** (int16_t)
+    - Current Y coordinate in millimeters.
+    - Positive Y axis extends out the front of the robot from its initial starting position.
+- **Bytes 11:12 - Heading** (int16_t)
+    - Current orientation in decidegrees.
+    - Heading is constrained from `0` to `3599`.
+    - Heading is clockwise positive from the robot's initial starting orientation.
+
+#### Command 17 - Navigate to Position Finished Response
+
+Response to Navigate to Position packet sent after robot has finished driving or interrupted by a new movement command.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>17</td>
+    <td>Req.</td>
+    <td colspan="2">X</td>
+    <td colspan="2">Y</td>
+    <td colspan="2">Heading</td>
+    <td colspan="10"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:4 - X** (int16_t)
+    - Current X coordinate in millimeters.
+- **Bytes 5:6 - Y** (int16_t)
+    - Current Y coordinate in millimeters.
+- **Bytes 7:8 - Heading** (int16_t)
+    - Current orientation in decidegrees.
 
 #### Command 27 - Drive Arc Finished Response
 
