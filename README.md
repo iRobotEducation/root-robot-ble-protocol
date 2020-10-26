@@ -18,6 +18,7 @@
     - [Device 12 - Bumpers](#device-12---bumpers)  
     - [Device 13 - Light Sensors](#device-13---light-sensors)  
     - [Device 14 - Battery](#device-14---battery)  
+    - [Device 16 - Accelerometer](#device-16---accelerometer)  
     - [Device 17 - Touch Sensors](#device-17---touch-sensors)  
     - [Device 20 - Cliff Sensor](#device-20---cliff-sensor)  
 5. [Example](#example)  
@@ -2920,6 +2921,113 @@ Response to Get Battery Level packet.
     - Battery voltage in units of millivolts.
 - **Byte 9 - Percent** (uint8_t)
     - Battery percent.
+
+### Device 16 - Accelerometer
+
+#### To Robot
+-------------------------------------------------------------------------------
+
+#### Command 1 - Get Accelerometer
+
+Request a response packet with Command 1 and matching ID containing accelerometer data.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>1</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
+#### From Robot
+-------------------------------------------------------------------------------
+
+#### Command 1 - Get Accelerometer Response
+
+Response to Get Accelerometer packet.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>1</td>
+    <td>Req.</td>
+    <td colspan="4">Timestamp</td>
+    <td colspan="2">X</td>
+    <td colspan="2">Y</td>
+    <td colspan="2">Z</td>
+    <td colspan="6"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in units of milliseconds.
+- **Bytes 7:8 - X** (int16_t)
+    - X axis acceleration in units of milli-g.
+- **Bytes 9:10 - Y** (int16_t)
+    - Y axis acceleration in units of milli-g.
+- **Bytes 11:12 - Z** (int16_t)
+    - Z axis acceleration in units of milli-g.
 
 ### Device 17 - Touch Sensors
 
