@@ -93,7 +93,7 @@ The current BLE protocol version is `1.3`. A table of supported main-board firmw
     <th>Protocol Version</th>
   </tr>
     <tr>
-    <td>3.0</td>
+    <td>2.1</td>
     <td>1.3</td>
   </tr>
   <tr>
