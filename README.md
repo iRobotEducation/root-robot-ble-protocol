@@ -2180,7 +2180,7 @@ Detected new color event. The robot sends a Color Sensor Event whenever one of t
 - **Nibbles 6:37 - Color** (uint4_t)
     - 32 4-bit identified color values.
     - In order from left to right, sensor 0 to sensor 31.
-    - Color can have one of 5 values:
+    - Color can have one of 5 values; other values are undefined and treated as white:
         - `0` - White
         - `1` - Black
         - `2` - Red
