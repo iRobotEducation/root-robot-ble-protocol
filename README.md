@@ -18,6 +18,7 @@
     - [Device 12 - Bumpers](#device-12---bumpers)  
     - [Device 13 - Light Sensors](#device-13---light-sensors)  
     - [Device 14 - Battery](#device-14---battery)  
+    - [Device 16 - Accelerometer](#device-16---accelerometer)  
     - [Device 17 - Touch Sensors](#device-17---touch-sensors)  
     - [Device 20 - Cliff Sensor](#device-20---cliff-sensor)  
 5. [Example](#example)  
@@ -52,7 +53,7 @@ This service contains mostly static information about the Root Robot. It contain
     - Ex. `1.0`
 - **Manufacturer characteristic** `00002a29-0000-1000-8000-00805f9b34fb`
     - Manufacturer name string, 13 bytes in length.
-    - Ex. `Root Robotics`
+    - Ex. `iRobot`
 - **Robot State characteristic** `00008bb6-0000-1000-8000-00805f9b34fb`
     - Bitfield of select robot sensors, 2 bytes in length.
     - MSB - `0b00<Cliff><L_Bump><R_Bump><RL_Touch><RR_Touch><FL_Touch><FR_Touch>`
@@ -71,17 +72,29 @@ This service represents an emulated UART port based on the unofficial specificat
 - **RX characteristic** `6e400003-b5a3-f393-e0a9-e50e24dcca9e`
     - Listen to this characteristic for events and responses to packets.
     - Sends packets of 20 bytes.
-    - Supports *notify* property.
+    - Supports *notify* and *indicate* properties.
     - BLE hosts must subscribe to this characteristic before any data can be received from robot.
+
+4. **Advertising packet**
+
+Before connection, the robot will broadcast an advertising packet and scan response packet that contain the following.
+    - Root Identifier service UUID
+    - Robot name
+    - Robot State State characteristic
+    - Manufacturer Data using manufacturer ID: `0x0600` and containing a string for robot type: ex. `RT1` or `RT0`
 
 ### BLE Protocol Version
 
-The current BLE protocol version is `1.2`. A table of supported main-board firmware versions is below:
+The current BLE protocol version is `1.3`. A table of supported main-board firmware versions is below:
 
 <table>
   <tr>
     <th>Firmware Version</th>
     <th>Protocol Version</th>
+  </tr>
+    <tr>
+    <td>2.1</td>
+    <td>1.3</td>
   </tr>
   <tr>
     <td>2.0</td>
@@ -1282,9 +1295,95 @@ Set the amount of correction used during vertical driving and when gravity compe
     - Maximum value is 3000 for 300%
     - Default value is 500 for 50%
 
+#### Command 15 - Reset Position
+
+Reset the estimated robot location and orientation to zero. The robot also resets the position when the nose button is pressed, when a Stop and Reset packet is received, and when a new Bluetooth connection is made.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>15</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
+#### Command 16 - Get Position
+
+Request a response packet with estimated robot location and orientation.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>16</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
 #### Command 27 - Drive Arc
 
-Drive the length of an arc defined by a set angle and radius. Robot sends a Drive ArcFinished response packet with Command 12 and matching ID when finished.
+Drive the length of an arc defined by a set angle and radius. Robot sends a Drive Arc Finished response packet with Command 27 and matching ID when finished.
 
 <table>
   <tr>
@@ -1426,6 +1525,119 @@ Response to Rotate Angle packet sent after robot has finished rotating or interr
     <td></td>
   </tr>
 </table>
+
+#### Command 16 - Get Position
+
+Response to Get Position packet with estimated robot location and orientation.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>16</td>
+    <td>Req.</td>
+    <td colspan="4">Timestamp</td>
+    <td colspan="2">X</td>
+    <td colspan="2">Y</td>
+    <td colspan="2">Heading</td>
+    <td colspan="6"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in milliseconds.
+- **Bytes 7:8 - X** (int16_t)
+    - Current X coordinate in millimeters.
+    - Positive X axis extends out the right side of the robot from its initial starting position.
+- **Bytes 9:10 - Y** (int16_t)
+    - Current Y coordinate in millimeters.
+    - Positive Y axis extends out the front of the robot from its initial starting position.
+- **Bytes 11:12 - Heading** (int16_t)
+    - Current orientation in decidegrees.
+    - Heading is constrained from `0` to `3599`.
+    - Heading is clockwise positive from the robot's initial starting orientation.
+
+#### Command 17 - Navigate to Position Finished Response
+
+Response to Navigate to Position packet sent after robot has finished driving or interrupted by a new movement command.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>17</td>
+    <td>Req.</td>
+    <td colspan="2">X</td>
+    <td colspan="2">Y</td>
+    <td colspan="2">Heading</td>
+    <td colspan="10"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:4 - X** (int16_t)
+    - Current X coordinate in millimeters.
+- **Bytes 5:6 - Y** (int16_t)
+    - Current Y coordinate in millimeters.
+- **Bytes 7:8 - Heading** (int16_t)
+    - Current orientation in decidegrees.
 
 #### Command 27 - Drive Arc Finished Response
 
@@ -1912,7 +2124,7 @@ Detected new color event. The robot sends a Color Sensor Event whenever one of t
 - **Nibbles 6:37 - Color** (uint4_t)
     - 32 4-bit identified color values.
     - In order from left to right, sensor 0 to sensor 31.
-    - Color can have one of 5 values:
+    - Color can have one of 5 values; other values are undefined and treated as white:
         - `0` - White
         - `1` - Black
         - `2` - Red
@@ -1975,9 +2187,9 @@ Play a frequency from the robot's buzzer. Robot sends a Play Note Finished respo
     - Duration of note in units of milliseconds.
     - A duration of zero cancels any currently playing notes.
 
-#### Command 1 - Stop Note
+#### Command 1 - Stop Sound
 
-Immediately stop any playing note.
+Immediately stop any playing any sound.
 
 <table>
   <tr>
@@ -2064,6 +2276,83 @@ Speak a text string in robot language. Robot sends a Say Phrase Finished respons
 - **Bytes 3:18 - Phrase** (string)
     - UTF-8 encoded string with text to speak.
     - String should be null terminated if less than 16 bytes.
+
+#### Command 5 - Play Sweep
+
+Speak a text string in robot language. Robot sends a Say Phrase Finished response packet with Command 4 and matching ID when finished.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>5</td>
+    <td>Inc.</td>
+    <td colspan="4">Start Frequency</td>
+    <td colspan="4">End Frequency</td>
+    <td colspan="2">Duration</td>
+    <td>Attack</td>
+    <td>Release</td>
+    <td>Volume</td>
+    <td>Modulation Type</td>
+    <td>Modulation Rate</td>
+    <td>Append</td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - Start Frequency** (uint32_t)
+    - Frequency to start sweep in units of milli-Hertz.
+- **Bytes 7:10 - End Frequency** (uint32_t)
+    - Frequency to end sweep in units of milli-Hertz.
+- **Bytes 11:12 - Duration** (uint16_t)
+    - Time to play sweep in units of milliseconds.
+- **Byte 13 - Attack** (uint8_t)
+    - Time to ramp volume from zero to maximum in units of milliseconds.
+    - Attack + Release cannot be greater than Duration.
+- **Byte 14 - Release** (uint8_t)
+    - Time to ramp volume from maximum to zero in units of milliseconds.
+    - Attack + Release cannot be greater than Duration.
+- **Byte 15 - Volume** (uint8_t)
+    - Volume from `0` (silent) to `255` (max).
+- **Byte 16 - Modulation Type** (uint8_t)
+    - Modulate a sound property while a tone is playing. Can be one of 4 values:
+        - `0` - Disabled.
+        - `1` - Volume.
+        - `2` - Pulse Width.
+        - `3` - Frequency.
+- **Byte 17 - Modulation Rate** (uint8_t)
+    - Modulation Rate in units of Hertz.
+- **Byte 18 - Append** (uint8_t)
+    - If this byte is non-zero the Sweep will start after the currently playing Sweep is finished, instead of interrupting.
+    - Only one Sweep can be pending, sending more Sweep packets with Append set will overwrite the pending Sweep.
 
 #### From Robot
 -------------------------------------------------------------------------------
@@ -2154,6 +2443,49 @@ Response to Say Phrase packet sent after robot has finished speaking phrase or i
   </tr>
 </table>
 
+#### Command 5 - Play Sweep Finished Response
+
+Response to Play Sweep packet sent after robot has finished playing sweep or interrupted by a new sound command.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>5</td>
+    <td>Req.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
 ### Device 12 - Bumpers
 
 #### From Robot
@@ -2214,6 +2546,52 @@ Bumper state changed event. The robot sends a Bumper Event whenever one of the b
         - `0xC0` - Both bumpers pressed.
 
 ### Device 13 - Light Sensors
+
+#### To Robot
+-------------------------------------------------------------------------------
+
+#### Command 1 - Get Light Values
+
+Request a response packet with Command 1 and matching ID containing values from the ambient light sensors.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>1</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
 
 #### From Robot
 -------------------------------------------------------------------------------
@@ -2276,6 +2654,59 @@ Ambient light changed event. The robot sends a Light Event whenever a new ambien
 - **Bytes 8:9 - Left** (uint16_t)
     - Left eye ambient light level in units of millivolts.
 - **Bytes 10:11 - Right** (uint16_t)
+    - Right eye ambient light level in units of millivolts.
+
+#### Command 1 - Get Light Values Response
+
+Response to Get Light Values packet.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>1</td>
+    <td>Evt.</td>
+    <td colspan="4">Timestamp</td>
+    <td colspan="2">Left</td>
+    <td colspan="2">Right</td>
+    <td colspan="8"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in units of milliseconds.
+- **Bytes 7:8 - Left** (uint16_t)
+    - Left eye ambient light level in units of millivolts.
+- **Bytes 9:10 - Right** (uint16_t)
     - Right eye ambient light level in units of millivolts.
 
 ### Device 14 - Battery
@@ -2435,6 +2866,113 @@ Response to Get Battery Level packet.
 - **Byte 9 - Percent** (uint8_t)
     - Battery percent.
 
+### Device 16 - Accelerometer
+
+#### To Robot
+-------------------------------------------------------------------------------
+
+#### Command 1 - Get Accelerometer
+
+Request a response packet with Command 1 and matching ID containing accelerometer data.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>1</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
+#### From Robot
+-------------------------------------------------------------------------------
+
+#### Command 1 - Get Accelerometer Response
+
+Response to Get Accelerometer packet.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>1</td>
+    <td>Req.</td>
+    <td colspan="4">Timestamp</td>
+    <td colspan="2">X</td>
+    <td colspan="2">Y</td>
+    <td colspan="2">Z</td>
+    <td colspan="6"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in units of milliseconds.
+- **Bytes 7:8 - X** (int16_t)
+    - X axis acceleration in units of milli-g.
+- **Bytes 9:10 - Y** (int16_t)
+    - Y axis acceleration in units of milli-g.
+- **Bytes 11:12 - Z** (int16_t)
+    - Z axis acceleration in units of milli-g.
+
 ### Device 17 - Touch Sensors
 
 #### From Robot
@@ -2586,7 +3124,7 @@ Additional information and instructions are documented within the script:
 
 ### Documentation
 
-Root Robot Bluetooth Low Energy Protocol Documentation (c) by Root Robotics, Inc.
+Root Robot Bluetooth Low Energy Protocol Documentation (c) by iRobot Corporation.
 
 Root Robot Bluetooth Low Energy Protocol Documentation is licensed under a Creative Commons Attribution 4.0 International License.
 
