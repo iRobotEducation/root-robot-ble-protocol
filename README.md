@@ -62,7 +62,7 @@ This service contains mostly static information about the Root Robot. It contain
 
 3. **UART service** `6e400001-b5a3-f393-e0a9-e50e24dcca9e`
 
-This service represents an emulated UART port based on the unofficial specifications of Nordic Semiconductor. It contains an RX and TX characteristic.
+This service represents an emulated UART port based on Nordic Semiconductor's [unofficial specification](https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/nrf/include/bluetooth/services/nus.html). It contains an RX and TX characteristic, defined from the perspective of the robot.
 
 - **RX characteristic** `6e400002-b5a3-f393-e0a9-e50e24dcca9e`
     - Send packets for robot to execute to this characteristic.
