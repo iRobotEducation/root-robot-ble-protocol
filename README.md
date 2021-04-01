@@ -64,12 +64,12 @@ This service contains mostly static information about the Root Robot. It contain
 
 This service represents an emulated UART port based on the unofficial specifications of Nordic Semiconductor. It contains an RX and TX characteristic.
 
-- **TX characteristic** `6e400002-b5a3-f393-e0a9-e50e24dcca9e`
+- **RX characteristic** `6e400002-b5a3-f393-e0a9-e50e24dcca9e`
     - Send packets for robot to execute to this characteristic.
     - Accepts packets of 20 bytes.
     - Supports *write with response* and *write without response* methods.
     - If using *write without response* method, it is the host's responsibility to allow time for the robot to process the packet.
-- **RX characteristic** `6e400003-b5a3-f393-e0a9-e50e24dcca9e`
+- **TX characteristic** `6e400003-b5a3-f393-e0a9-e50e24dcca9e`
     - Listen to this characteristic for events and responses to packets.
     - Sends packets of 20 bytes.
     - Supports *notify* and *indicate* properties.
