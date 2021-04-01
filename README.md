@@ -1381,6 +1381,62 @@ Request a response packet with estimated robot location and orientation.
   </tr>
 </table>
 
+#### Command 17 - Navigate to Position
+
+Navigate to an coordinate location with an optional end orientation. Robot sends a Navigate to Position Finished response packet with Command 17 and matching ID when finished.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>17</td>
+    <td>Inc.</td>
+    <td colspan="2">X</td>
+    <td colspan="2">Y</td>
+    <td colspan="2">Heading</td>
+    <td colspan="10"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:4 - X** (int16_t)
+    - X coordinate in millimeters.
+- **Bytes 5:6 - Y** (int16_t)
+    - Y coordinate in millimeters.
+- **Bytes 7:8 - Heading** (int16_t)
+    - Final orientation in decidegrees.
+    - Minimum value of `0`.
+    - Maximum value of `3599`.
+    - Set to `-1` to allow robot to choose final orientation.
+
 #### Command 27 - Drive Arc
 
 Drive the length of an arc defined by a set angle and radius. Robot sends a Drive Arc Finished response packet with Command 27 and matching ID when finished.
