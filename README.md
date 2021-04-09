@@ -3358,7 +3358,7 @@ Response to Get Cliff Threshold packet.
   <tr>
     <td>20</td>
     <td>2</td>
-    <td>Inc.</td>
+    <td>Req.</td>
     <td colspan="2">Threshold</td>
     <td colspan="14"></td>
     <td></td>
@@ -3406,8 +3406,8 @@ Response to Get Cliff Value packet.
   </tr>
   <tr>
     <td>20</td>
-    <td>1</td>
-    <td>Inc.</td>
+    <td>3</td>
+    <td>Req.</td>
     <td colspan="4">Timestamp</td>
     <td colspan="2">Value</td>
     <td colspan="10"></td>
