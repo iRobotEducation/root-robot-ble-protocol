@@ -3416,7 +3416,7 @@ Response to Get Cliff Value packet.
 </table>
 
 
-- **Bytes 3:6 - Timestamp** (uint16_t)
+- **Bytes 3:6 - Timestamp** (uint32_t)
     - Timestamp in milliseconds.
 - **Bytes 7:8 - Value** (int16_t)
     - Current cliff sensor value in requested units.
