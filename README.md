@@ -1421,19 +1421,19 @@ Navigate to an coordinate location with an optional end orientation. Robot sends
     <td>1</td>
     <td>17</td>
     <td>Inc.</td>
-    <td colspan="2">X</td>
-    <td colspan="2">Y</td>
+    <td colspan="4">X</td>
+    <td colspan="4">Y</td>
     <td colspan="2">Heading</td>
-    <td colspan="10"></td>
+    <td colspan="6"></td>
     <td></td>
   </tr>
 </table>
 
-- **Bytes 3:4 - X** (int16_t)
+- **Bytes 3:6 - X** (int32_t)
     - X coordinate in millimeters.
-- **Bytes 5:6 - Y** (int16_t)
+- **Bytes 7:10 - Y** (int32_t)
     - Y coordinate in millimeters.
-- **Bytes 7:8 - Heading** (int16_t)
+- **Bytes 11:12 - Heading** (int16_t)
     - Final orientation in decidegrees.
     - Minimum value of `0`.
     - Maximum value of `3599`.
@@ -1547,13 +1547,13 @@ Response to Drive Distance packet sent after robot has finished driving or inter
 
 - **Bytes 3:6 - Timestamp** (uint32_t)
     - Timestamp in milliseconds.
-- **Bytes 7:8 - X** (int32_t)
+- **Bytes 7:10 - X** (int32_t)
     - Current X coordinate in millimeters.
     - Positive X axis extends out the right side of the robot from its initial starting position.
-- **Bytes 9:10 - Y** (int32_t)
+- **Bytes 11:14 - Y** (int32_t)
     - Current Y coordinate in millimeters.
     - Positive Y axis extends out the front of the robot from its initial starting position.
-- **Bytes 11:12 - Heading** (int16_t)
+- **Bytes 15:16 - Heading** (int16_t)
     - Current orientation in decidegrees.
     - Heading is constrained from `0` to `3599`.
     - Heading is clockwise positive from the robot's initial starting orientation.
@@ -1607,13 +1607,13 @@ Response to Rotate Angle packet sent after robot has finished rotating or interr
 
 - **Bytes 3:6 - Timestamp** (uint32_t)
     - Timestamp in milliseconds.
-- **Bytes 7:8 - X** (int32_t)
+- **Bytes 7:10 - X** (int32_t)
     - Current X coordinate in millimeters.
     - Positive X axis extends out the right side of the robot from its initial starting position.
-- **Bytes 9:10 - Y** (int32_t)
+- **Bytes 11:14 - Y** (int32_t)
     - Current Y coordinate in millimeters.
     - Positive Y axis extends out the front of the robot from its initial starting position.
-- **Bytes 11:12 - Heading** (int16_t)
+- **Bytes 15:16 - Heading** (int16_t)
     - Current orientation in decidegrees.
     - Heading is constrained from `0` to `3599`.
     - Heading is clockwise positive from the robot's initial starting orientation.
@@ -1667,13 +1667,13 @@ Response to Get Position packet with estimated robot location and orientation.
 
 - **Bytes 3:6 - Timestamp** (uint32_t)
     - Timestamp in milliseconds.
-- **Bytes 7:8 - X** (int32_t)
+- **Bytes 7:10 - X** (int32_t)
     - Current X coordinate in millimeters.
     - Positive X axis extends out the right side of the robot from its initial starting position.
-- **Bytes 9:10 - Y** (int32_t)
+- **Bytes 11:14 - Y** (int32_t)
     - Current Y coordinate in millimeters.
     - Positive Y axis extends out the front of the robot from its initial starting position.
-- **Bytes 11:12 - Heading** (int16_t)
+- **Bytes 15:16 - Heading** (int16_t)
     - Current orientation in decidegrees.
     - Heading is constrained from `0` to `3599`.
     - Heading is clockwise positive from the robot's initial starting orientation.
@@ -1729,13 +1729,13 @@ Response to Navigate to Position packet sent after robot has finished driving or
 
 - **Bytes 3:6 - Timestamp** (uint32_t)
     - Timestamp in milliseconds.
-- **Bytes 7:8 - X** (int32_t)
+- **Bytes 7:10 - X** (int32_t)
     - Current X coordinate in millimeters.
     - Positive X axis extends out the right side of the robot from its initial starting position.
-- **Bytes 9:10 - Y** (int32_t)
+- **Bytes 11:14 - Y** (int32_t)
     - Current Y coordinate in millimeters.
     - Positive Y axis extends out the front of the robot from its initial starting position.
-- **Bytes 11:12 - Heading** (int16_t)
+- **Bytes 15:16 - Heading** (int16_t)
     - Current orientation in decidegrees.
     - Heading is constrained from `0` to `3599`.
     - Heading is clockwise positive from the robot's initial starting orientation.
