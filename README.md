@@ -1529,7 +1529,7 @@ Response to Drive Distance packet sent after robot has finished driving or inter
     <th>Dev</th>
     <th>Cmd</th>
     <th>ID</th>
-    <th colspan="16">Payload</th>
+    <th colspan="8">Payload</th>
     <th>CRC</th>
   </tr>
   <tr>
@@ -1594,7 +1594,7 @@ Response to Rotate Angle packet sent after robot has finished rotating or interr
   </tr>
   <tr>
     <td>1</td>
-    <td>16</td>
+    <td>12</td>
     <td>Req.</td>
     <td colspan="4">Timestamp</td>
     <td colspan="4">X</td>
@@ -1716,7 +1716,7 @@ Response to Navigate to Position packet sent after robot has finished driving or
   </tr>
   <tr>
     <td>1</td>
-    <td>16</td>
+    <td>17</td>
     <td>Req.</td>
     <td colspan="4">Timestamp</td>
     <td colspan="4">X</td>
