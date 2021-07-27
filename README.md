@@ -1529,7 +1529,7 @@ Response to Drive Distance packet sent after robot has finished driving or inter
     <th>Dev</th>
     <th>Cmd</th>
     <th>ID</th>
-    <th colspan="8">Payload</th>
+    <th colspan="16">Payload</th>
     <th>CRC</th>
   </tr>
   <tr>
