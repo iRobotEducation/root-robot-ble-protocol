@@ -1534,7 +1534,7 @@ Response to Drive Distance packet sent after robot has finished driving or inter
   </tr>
   <tr>
     <td>1</td>
-    <td>16</td>
+    <td>8</td>
     <td>Req.</td>
     <td colspan="4">Timestamp</td>
     <td colspan="4">X</td>
