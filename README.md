@@ -78,10 +78,10 @@ This service represents an emulated UART port based on Nordic Semiconductor's [u
 4. **Advertising packet**
 
 Before connection, the robot will broadcast an advertising packet and scan response packet that contain the following.
-    - Root Identifier service UUID
-    - Robot name
-    - Robot State State characteristic
-    - Manufacturer Data using manufacturer ID: `0x0600` and containing a string for robot type: ex. `RT1` or `RT0`
+- Root Identifier service UUID
+- Robot name
+- Robot State characteristic
+- Manufacturer Data using manufacturer ID: `0x0600` and containing a string for robot type: ex. `RT1` or `RT0`
 
 ### BLE Protocol Version
 
@@ -1297,7 +1297,7 @@ Set the amount of correction used during vertical driving and when gravity compe
 
 #### Command 15 - Reset Position
 
-Reset the estimated robot location and orientation to zero. The robot also resets the position when the nose button is pressed, when a Stop and Reset packet is received, and when a new Bluetooth connection is made.
+Reset the estimated robot location to (0, 0) and orientation to 90 degrees of yaw (pointing in the direction of positive-y on a right-handed xy plane). The robot also resets the position when the nose button is pressed, when a Stop and Reset packet is received, and when a new Bluetooth connection is made.
 
 <table>
   <tr>
