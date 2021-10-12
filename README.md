@@ -2279,7 +2279,7 @@ Speak a text string in robot language. Robot sends a Say Phrase Finished respons
 
 #### Command 5 - Play Sweep
 
-Speak a text string in robot language. Robot sends a Say Phrase Finished response packet with Command 4 and matching ID when finished.
+Sweep linearly between two frequencies over a specified duration. Robot sends a Play Sweep Finished response packet with Command 5 and matching ID when finished.
 
 <table>
   <tr>
