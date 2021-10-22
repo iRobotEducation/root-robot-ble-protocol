@@ -1618,7 +1618,7 @@ Response to Rotate Angle packet sent after robot has finished rotating or interr
     - Heading is constrained from `0` to `3599`.
     - Heading is clockwise positive from the robot's initial starting orientation.
 
-#### Command 16 - Get Position
+#### Command 16 - Get Position Response
 
 Response to Get Position packet with estimated robot location and orientation.
 
@@ -3109,7 +3109,7 @@ Touch Sensor changed event. The robot sends a Touch Sensor Event whenever one or
     <td>4</td>
     <td>5</td>
     <td>6</td>
-    <td colspan="2">7</td>
+    <td>7</td>
     <td>8</td>
     <td>9</td>
     <td>10</td>
@@ -3127,7 +3127,7 @@ Touch Sensor changed event. The robot sends a Touch Sensor Event whenever one or
     <th>Dev</th>
     <th>Cmd</th>
     <th>ID</th>
-    <th colspan="17">Payload</th>
+    <th colspan="16">Payload</th>
     <th>CRC</th>
   </tr>
   <tr>
@@ -3136,7 +3136,6 @@ Touch Sensor changed event. The robot sends a Touch Sensor Event whenever one or
     <td>Evt.</td>
     <td colspan="4">Timestamp</td>
     <td>State</td>
-    <td></td>
     <td colspan="11"></td>
     <td></td>
   </tr>
