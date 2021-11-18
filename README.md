@@ -1550,13 +1550,15 @@ Response to Drive Distance packet sent after robot has finished driving or inter
 - **Bytes 7:10 - X** (int32_t)
     - Current X coordinate in millimeters.
     - Positive X axis extends out the right side of the robot from its initial starting position.
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
 - **Bytes 11:14 - Y** (int32_t)
     - Current Y coordinate in millimeters.
-    - Positive Y axis extends out the front of the robot from its initial starting position.
+    - Positive Y axis extends out the front of the robot from its initial starting position. 
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
 - **Bytes 15:16 - Heading** (int16_t)
     - Current orientation in decidegrees.
     - Heading is constrained from `0` to `3599`.
-    - Heading is clockwise positive from the robot's initial starting orientation.
+    - Heading is clockwise negative (Z up) from the robot's initial starting orientation. By default, the robot initially starts at 90 degrees of yaw.
 
 #### Command 12 - Rotate Angle Finished Response
 
@@ -1610,13 +1612,15 @@ Response to Rotate Angle packet sent after robot has finished rotating or interr
 - **Bytes 7:10 - X** (int32_t)
     - Current X coordinate in millimeters.
     - Positive X axis extends out the right side of the robot from its initial starting position.
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
 - **Bytes 11:14 - Y** (int32_t)
     - Current Y coordinate in millimeters.
-    - Positive Y axis extends out the front of the robot from its initial starting position.
+    - Positive Y axis extends out the front of the robot from its initial starting position. 
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
 - **Bytes 15:16 - Heading** (int16_t)
     - Current orientation in decidegrees.
     - Heading is constrained from `0` to `3599`.
-    - Heading is clockwise positive from the robot's initial starting orientation.
+    - Heading is clockwise negative (Z up) from the robot's initial starting orientation. By default, the robot initially starts at 90 degrees of yaw.
 
 #### Command 16 - Get Position Response
 
@@ -1670,13 +1674,15 @@ Response to Get Position packet with estimated robot location and orientation.
 - **Bytes 7:10 - X** (int32_t)
     - Current X coordinate in millimeters.
     - Positive X axis extends out the right side of the robot from its initial starting position.
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
 - **Bytes 11:14 - Y** (int32_t)
     - Current Y coordinate in millimeters.
-    - Positive Y axis extends out the front of the robot from its initial starting position.
+    - Positive Y axis extends out the front of the robot from its initial starting position. 
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
 - **Bytes 15:16 - Heading** (int16_t)
     - Current orientation in decidegrees.
     - Heading is constrained from `0` to `3599`.
-    - Heading is clockwise positive from the robot's initial starting orientation.
+    - Heading is clockwise negative (Z up) from the robot's initial starting orientation. By default, the robot initially starts at 90 degrees of yaw.
 
 #### Command 17 - Navigate to Position Finished Response
 
@@ -1732,13 +1738,15 @@ Response to Navigate to Position packet sent after robot has finished driving or
 - **Bytes 7:10 - X** (int32_t)
     - Current X coordinate in millimeters.
     - Positive X axis extends out the right side of the robot from its initial starting position.
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
 - **Bytes 11:14 - Y** (int32_t)
     - Current Y coordinate in millimeters.
-    - Positive Y axis extends out the front of the robot from its initial starting position.
+    - Positive Y axis extends out the front of the robot from its initial starting position. 
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
 - **Bytes 15:16 - Heading** (int16_t)
     - Current orientation in decidegrees.
     - Heading is constrained from `0` to `3599`.
-    - Heading is clockwise positive from the robot's initial starting orientation.
+    - Heading is clockwise negative (Z up) from the robot's initial starting orientation. By default, the robot initially starts at 90 degrees of yaw.
 
 #### Command 27 - Drive Arc Finished Response
 
@@ -1792,13 +1800,15 @@ Response to Drive Arc packet sent after robot has finished driving or interrupte
 - **Bytes 7:10 - X** (int32_t)
     - Current X coordinate in millimeters.
     - Positive X axis extends out the right side of the robot from its initial starting position.
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
 - **Bytes 11:14 - Y** (int32_t)
     - Current Y coordinate in millimeters.
-    - Positive Y axis extends out the front of the robot from its initial starting position.
+    - Positive Y axis extends out the front of the robot from its initial starting position. 
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
 - **Bytes 15:16 - Heading** (int16_t)
     - Current orientation in decidegrees.
     - Heading is constrained from `0` to `3599`.
-    - Heading is clockwise positive from the robot's initial starting orientation.
+    - Heading is clockwise negative (Z up) from the robot's initial starting orientation. By default, the robot initially starts at 90 degrees of yaw.
 
 #### Command 29 - Motor Stall Event
 
