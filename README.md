@@ -721,7 +721,8 @@ Response to Get Versions packet.
     <td>Boot Min</td>
     <td>Proto Maj</td>
     <td>Proto Min</td>
-    <td colspan="7"></td>
+    <td>Patch</td>
+    <td colspan="6"></td>
     <td></td>
   </tr>
 </table>
@@ -746,6 +747,8 @@ Response to Get Versions packet.
     - Protocol version major number.
 - **Byte 11 - Proto Min** (uint8_t)
     - Protocol version minor number.
+- **Byte 12 - Patch** (uint8_t)
+    - Firmware version patch number.
 
 #### Command 2 - Get Name Response
 
