@@ -85,14 +85,20 @@ Before connection, the robot will broadcast an advertising packet and scan respo
 
 ### BLE Protocol Version
 
-The current BLE protocol version is `1.3`. A table of supported main-board firmware versions is below:
+The current BLE protocol version supported on Root is `1.3`.
+(`1.4` is planned but not yet released.)
+A table of supported main-board firmware versions is below:
 
 <table>
   <tr>
     <th>Firmware Version</th>
     <th>Protocol Version</th>
   </tr>
-    <tr>
+  <tr>
+    <td>2.3</td>
+    <td>1.4</td>
+  </tr>
+  <tr>
     <td>2.1</td>
     <td>1.3</td>
   </tr>
@@ -1388,7 +1394,7 @@ Request a response packet with estimated robot location and orientation.
 
 Navigate to an coordinate location with an optional end orientation. Robot sends a Navigate to Position Finished response packet with Command 17 and matching ID when finished.
 
-:warning: This command is not yet implemented. :warning:
+:warning: This command is added in protocol version `1.4`. :warning:
 
 <table>
   <tr>
@@ -1689,7 +1695,7 @@ Response to Get Position packet with estimated robot location and orientation.
 
 #### Command 17 - Navigate to Position Finished Response
 
-:warning: This response is not yet implemented. :warning:
+:warning: This response is added in protocol version `1.4`. :warning:
 
 Response to Navigate to Position packet sent after robot has finished driving or interrupted by a new movement command.
 
