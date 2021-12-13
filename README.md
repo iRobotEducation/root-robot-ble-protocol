@@ -15,6 +15,7 @@
     - [Device 3 - LED Lights](#device-3---led-lights)  
     - [Device 4 - Color Sensor](#device-4---color-sensor)  
     - [Device 5 - Sound](#device-5---sound)  
+    - [Device 11 - Light Touch](#device-11---light-touch)  
     - [Device 12 - Bumpers](#device-12---bumpers)  
     - [Device 13 - Light Sensors](#device-13---light-sensors)  
     - [Device 14 - Battery](#device-14---battery)  
@@ -81,7 +82,7 @@ Before connection, the robot will broadcast an advertising packet and scan respo
 - Root Identifier service UUID
 - Robot name
 - Robot State characteristic
-- Manufacturer Data using manufacturer ID: `0x0600` and containing a string for robot type: ex. `RT1` or `RT0`
+- Manufacturer Data using manufacturer ID: `0x0600` and containing a string for robot type: ex. `RT1` or `RT0` or `Ci3`
 
 ### BLE Protocol Version
 
@@ -143,6 +144,8 @@ A table of supported main-board firmware versions is below:
     <td>1.0</td>
   </tr>
 </table>
+
+Note that the first version of the protocol that the Create 3 robot will support is `1.4`.
 
 ## Packet Components
 
@@ -2622,6 +2625,121 @@ Response to Play Sweep packet sent after robot has finished playing sweep or int
     <td></td>
   </tr>
 </table>
+
+### Device 11 - Light Touch
+
+#### To Robot
+-------------------------------------------------------------------------------
+
+#### Command 1 - Get Light Touch Values
+
+Request a response packet with Command 1 and matching ID containing values from the light touch sensors.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>1</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
+#### From Robot
+-------------------------------------------------------------------------------
+
+#### Command 1 - Get Light Touch Values Response
+
+Response to Get Light Touch Values packet.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>1</td>
+    <td>Evt.</td>
+    <td colspan="4">Timestamp</td>
+    <td colspan="2">Sensor 0</td>
+    <td colspan="2">Sensor 1</td>
+    <td colspan="2">Sensor 2</td>
+    <td colspan="2">Sensor 3</td>
+    <td colspan="2">Sensor 4</td>
+    <td colspan="2">Sensor 5</td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in units of milliseconds.
+- **Bytes 7:8 - Sensor 0** (uint16_t)
+    - Reflective IR sensor value in units of counts.
+- **Bytes 9:10 - Sensor 1** (uint16_t)
+    - Reflective IR sensor value in units of counts.
+- **Bytes 11:12 - Sensor 2** (uint16_t)
+    - Reflective IR sensor value in units of counts.
+- **Bytes 13:14 - Sensor 3** (uint16_t)
+    - Reflective IR sensor value in units of counts.
+- **Bytes 15:16 - Sensor 4** (uint16_t)
+    - Reflective IR sensor value in units of counts.
+- **Bytes 17:18 - Sensor 5** (uint16_t)
+    - Reflective IR sensor value in units of counts.
 
 ### Device 12 - Bumpers
 
