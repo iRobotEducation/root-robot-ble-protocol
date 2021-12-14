@@ -807,7 +807,7 @@ Response to Get Name packet.
 
 #### Command 4 - Stop Project
 
-An event indicating that the running project should be stopped. This event is typically triggered by pressing the robot nose button.
+An event indicating that the running project should be stopped. This event is typically triggered by pressing the Root robot's nose button, or the Create 3 robot's power button.
 
 <table>
   <tr>
@@ -1309,7 +1309,7 @@ Set the amount of correction used during vertical driving and when gravity compe
 
 #### Command 15 - Reset Position
 
-Reset the estimated robot location to (0, 0) and orientation to 90 degrees of yaw (pointing in the direction of positive-y on a right-handed xy plane). The robot also resets the position when the nose button is pressed, when a Stop and Reset packet is received, and when a new Bluetooth connection is made.
+Reset the estimated robot location to (0, 0) and orientation to 90 degrees of yaw (pointing in the direction of positive-y on a right-handed xy plane). The robot also resets the position when the Root robot nose button (or Create 3 power button) is pressed, when a Stop and Reset packet is received, and when a new Bluetooth connection is made.
 
 <table>
   <tr>
