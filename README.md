@@ -2666,7 +2666,7 @@ Request a response packet with Command 1 and matching ID containing values from 
     <th>CRC</th>
   </tr>
   <tr>
-    <td>13</td>
+    <td>11</td>
     <td>1</td>
     <td>Inc.</td>
     <td colspan="16"></td>
@@ -2712,7 +2712,7 @@ Response to Get Light Touch Values packet.
     <th>CRC</th>
   </tr>
   <tr>
-    <td>13</td>
+    <td>11</td>
     <td>1</td>
     <td>Evt.</td>
     <td colspan="4">Timestamp</td>
@@ -3291,6 +3291,8 @@ Touch Sensor changed event. The robot sends a Touch Sensor Event whenever one or
         - `RR` - Rear Right sensor.
         - `RL` - Rear Left sensor.
 
+Note that the Create 3 robot maps button 1 (·) to `FL` and button 2 (··) to `FR`.
+
 ### Device 20 - Cliff Sensor
 
 #### To Robot
@@ -3505,9 +3507,7 @@ Cliff detected event. The robot sends a Cliff Event whenever the IR cliff sensor
 - **Bytes 3:6 - Timestamp** (uint32_t)
     - Timestamp in units of milliseconds.
 - **Byte 7 - Cliff** (uint8_t)
-    - Cliff state. Can be one of 2 values:
-        - `0` - No cliff.
-        - `1` - Cliff.
+    - Cliff state. Reads `0` if no cliff; any other value indicates that the robot is experiencing a cliff event.
 - **Bytes 8:9 - Sensor** (uint16_t)
     - Current cliff sensor value in units of millivolts.
 - **Bytes 10:11 - Threshold** (uint16_t)
