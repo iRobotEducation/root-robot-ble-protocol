@@ -3609,11 +3609,261 @@ Response to Get Cliff Value packet.
   </tr>
 </table>
 
+### Device 100 - Connectivity
+Note: this device is only supported on Create 3.
+
+#### To Robot
+-------------------------------------------------------------------------------
+
+#### Command 1 - Get IPv4 Addresses
+
+Request a response packet with Command 1 and matching ID containing the IPv4 addresses of all of the robot's interfaces
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td>1</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
+#### Command 2 - Request Easy Update
+
+Request the robot to, if connected to the Internet, download and install the most recent firmware update from iRobot.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td>2</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
+#### From Robot
+-------------------------------------------------------------------------------
+
+#### Command 0 - IPv4 Change Event
+
+Connection status changed event. The robot sends a connection status event when any of its network interfaces changes state.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td>0</td>
+    <td>Evt.</td>
+    <td colspan="4">wlan0</td>
+    <td colspan="4">wlan1</td>
+    <td colspan="4">usb0</td>
+    <td colspan="4"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - wlan0** (uint32_t)
+    - IPv4 address assigned to wlan0.
+- **Bytes 7:10 - wlan1** (uint32_t)
+    - IPv4 address assigned to wlan1.
+- **Bytes 11:14 - usb0** (uint32_t)
+    - IPv4 address assigned to usb0.
+
+#### Command 1 - Get IPv4 Addresses Response
+
+Response to Get IPv4 Addresses packet.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td>1</td>
+    <td>Inc.</td>
+    <td colspan="4">wlan0</td>
+    <td colspan="4">wlan1</td>
+    <td colspan="4">usb0</td>
+    <td colspan="4"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - wlan0** (uint32_t)
+    - IPv4 address assigned to wlan0.
+- **Bytes 7:10 - wlan1** (uint32_t)
+    - IPv4 address assigned to wlan1.
+- **Bytes 11:14 - usb0** (uint32_t)
+    - IPv4 address assigned to usb0.
+
+#### Command 3 - Get IPv4 Addresses Response
+
+Response to Get IPv4 Addresses packet.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td>3</td>
+    <td>Evt.</td>
+    <td colspan="4">Timestamp</td>
+    <td colspan="1">Stage</td>
+    <td colspan="1">Percent</td>
+    <td colspan="10"></td>
+    <td></td>
+  </tr>
+</table>
 
 - **Bytes 3:6 - Timestamp** (uint32_t)
-    - Timestamp in milliseconds.
-- **Bytes 7:8 - Value** (int16_t)
-    - Current cliff sensor value in requested units.
+    - Timestamp in units of milliseconds.
+- **Byte 7 - Stage** (uint8_t)
+    - Character indicating what stage of the update the robot is in. Current valid values are:
+        - `d` - downloading
+        - `i` - installing
+- **Byte 8 - Percent** (uint8_t)
+    - Percentage of current stage completed (between 0 and 100, inclusive)
 
 ## Example
 
