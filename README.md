@@ -22,6 +22,7 @@
     - [Device 16 - Accelerometer](#device-16---accelerometer)  
     - [Device 17 - Touch Sensors](#device-17---touch-sensors)  
     - [Device 20 - Cliff Sensor](#device-20---cliff-sensor)  
+    - [Device 100 - Connectivity](#device-100---connectivity)  
 5. [Example](#example)  
 6. [Licenses](#licenses)  
 
@@ -1885,6 +1886,7 @@ Motor has stalled event. The robot sends a Motor Stall Event whenever a stall is
         - `5` - Timeout.
 
 ### Device 2 - Marker/Eraser
+Note: This device is not supported on Create 3.
 
 #### To Robot
 -------------------------------------------------------------------------------
@@ -2061,6 +2063,7 @@ Set LED cross animation type and color.
     - Off is `0`, Full brightness is `255`.
 
 ### Device 4 - Color Sensor
+Note: This device is not supported on Create 3 or RT0.
 
 #### To Robot
 -------------------------------------------------------------------------------
@@ -2627,6 +2630,7 @@ Response to Play Sweep packet sent after robot has finished playing sweep or int
 </table>
 
 ### Device 11 - Light Touch
+Note: This device is not supported on Root robots.
 
 #### To Robot
 -------------------------------------------------------------------------------
@@ -2801,6 +2805,7 @@ Bumper state changed event. The robot sends a Bumper Event whenever one of the b
         - `0xC0` - Both bumpers pressed.
 
 ### Device 13 - Light Sensors
+Note: This device is not supported on Create 3.
 
 #### To Robot
 -------------------------------------------------------------------------------
@@ -3610,7 +3615,7 @@ Response to Get Cliff Value packet.
 </table>
 
 ### Device 100 - Connectivity
-Note: this device is only supported on Create 3.
+Note: this device is not supported on Root robots.
 
 #### To Robot
 -------------------------------------------------------------------------------
