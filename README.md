@@ -1857,7 +1857,7 @@ Response to Set Marker/Eraser Position sent after marker/eraser actuator has fin
 #### To Robot
 -------------------------------------------------------------------------------
 
-#### Command 3 - Set LED Animation
+#### Command 2 - Set LED Animation
 
 Set LED cross animation type and color.
 
