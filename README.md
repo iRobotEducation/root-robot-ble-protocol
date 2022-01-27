@@ -3815,9 +3815,9 @@ Response to Get IPv4 Addresses packet.
 - **Bytes 11:14 - usb0** (uint32_t)
     - IPv4 address assigned to usb0.
 
-#### Command 3 - Get IPv4 Addresses Response
+#### Command 3 - Easy Update Event
 
-Response to Get IPv4 Addresses packet.
+Events for feedback during an easy update.
 
 <table>
   <tr>
@@ -3867,8 +3867,8 @@ Response to Get IPv4 Addresses packet.
     - Character indicating what stage of the update the robot is in. Current valid values are:
         - `d` - downloading
         - `i` - installing
-- **Byte 8 - Percent** (uint8_t)
-    - Percentage of current stage completed (between 0 and 100, inclusive)
+- **Byte 8 - Percent** (int8_t)
+    - Percentage of current stage completed (between `0` and `100`, inclusive), or `-1` if there is an error.
 
 ## Example
 
