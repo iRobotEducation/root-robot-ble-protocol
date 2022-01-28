@@ -97,10 +97,6 @@ A table of supported main-board firmware versions is below:
     <th>Protocol Version</th>
   </tr>
   <tr>
-    <td>2.3</td>
-    <td>1.4</td>
-  </tr>
-  <tr>
     <td>2.1</td>
     <td>1.3</td>
   </tr>
