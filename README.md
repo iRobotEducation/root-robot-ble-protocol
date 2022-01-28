@@ -87,9 +87,9 @@ Before connection, the robot will broadcast an advertising packet and scan respo
 
 ### BLE Protocol Version
 
-The current BLE protocol version supported on Root is `1.3`.
-(`1.4` is planned but not yet released.)
-A table of supported main-board firmware versions is below:
+The current BLE protocol version supported on Root is `1.2`.
+(`1.3` and `1.4` are planned but not yet released.)
+A table of main board firmware versions with associated protocol versions is below:
 
 <table>
   <tr>
@@ -97,8 +97,12 @@ A table of supported main-board firmware versions is below:
     <th>Protocol Version</th>
   </tr>
   <tr>
-    <td>2.1</td>
+    <td>2.3</td>
     <td>1.3</td>
+  </tr>
+  <tr>
+    <td>2.1</td>
+    <td>1.2</td>
   </tr>
   <tr>
     <td>2.0</td>
