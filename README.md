@@ -15,12 +15,14 @@
     - [Device 3 - LED Lights](#device-3---led-lights)  
     - [Device 4 - Color Sensor](#device-4---color-sensor)  
     - [Device 5 - Sound](#device-5---sound)  
+    - [Device 11 - Light Touch](#device-11---light-touch)  
     - [Device 12 - Bumpers](#device-12---bumpers)  
     - [Device 13 - Light Sensors](#device-13---light-sensors)  
     - [Device 14 - Battery](#device-14---battery)  
     - [Device 16 - Accelerometer](#device-16---accelerometer)  
     - [Device 17 - Touch Sensors](#device-17---touch-sensors)  
     - [Device 20 - Cliff Sensor](#device-20---cliff-sensor)  
+    - [Device 100 - Connectivity](#device-100---connectivity)  
 5. [Example](#example)  
 6. [Licenses](#licenses)  
 
@@ -78,23 +80,29 @@ This service represents an emulated UART port based on Nordic Semiconductor's [u
 4. **Advertising packet**
 
 Before connection, the robot will broadcast an advertising packet and scan response packet that contain the following.
-    - Root Identifier service UUID
-    - Robot name
-    - Robot State State characteristic
-    - Manufacturer Data using manufacturer ID: `0x0600` and containing a string for robot type: ex. `RT1` or `RT0`
+- Root Identifier service UUID
+- Robot name
+- Robot State characteristic
+- Manufacturer Data using manufacturer ID: `0x0600` and containing a string for robot type: ex. `RT1` or `RT0` or `Ci3`
 
 ### BLE Protocol Version
 
-The current BLE protocol version is `1.3`. A table of supported main-board firmware versions is below:
+The current BLE protocol version supported on Root is `1.2`.
+(`1.3` and `1.4` are planned but not yet released.)
+A table of main board firmware versions with associated protocol versions is below:
 
 <table>
   <tr>
     <th>Firmware Version</th>
     <th>Protocol Version</th>
   </tr>
-    <tr>
-    <td>2.1</td>
+  <tr>
+    <td>2.3</td>
     <td>1.3</td>
+  </tr>
+  <tr>
+    <td>2.1</td>
+    <td>1.2</td>
   </tr>
   <tr>
     <td>2.0</td>
@@ -137,6 +145,8 @@ The current BLE protocol version is `1.3`. A table of supported main-board firmw
     <td>1.0</td>
   </tr>
 </table>
+
+Note that the first version of the protocol that the Create 3 robot will support is `1.4`.
 
 ## Packet Components
 
@@ -721,7 +731,8 @@ Response to Get Versions packet.
     <td>Boot Min</td>
     <td>Proto Maj</td>
     <td>Proto Min</td>
-    <td colspan="7"></td>
+    <td>Patch</td>
+    <td colspan="6"></td>
     <td></td>
   </tr>
 </table>
@@ -746,6 +757,8 @@ Response to Get Versions packet.
     - Protocol version major number.
 - **Byte 11 - Proto Min** (uint8_t)
     - Protocol version minor number.
+- **Byte 12 - Patch** (uint8_t)
+    - Firmware version patch number.
 
 #### Command 2 - Get Name Response
 
@@ -795,7 +808,7 @@ Response to Get Name packet.
 
 #### Command 4 - Stop Project
 
-An event indicating that the running project should be stopped. This event is typically triggered by pressing the robot nose button.
+An event indicating that the running project should be stopped. This event is typically triggered by pressing the Root robot's nose button, or the Create 3 robot's power button.
 
 <table>
   <tr>
@@ -1297,7 +1310,7 @@ Set the amount of correction used during vertical driving and when gravity compe
 
 #### Command 15 - Reset Position
 
-Reset the estimated robot location and orientation to zero. The robot also resets the position when the nose button is pressed, when a Stop and Reset packet is received, and when a new Bluetooth connection is made.
+Reset the estimated robot location to (0, 0) and orientation to 90 degrees of yaw (pointing in the direction of positive-y on a right-handed xy plane). The robot also resets the position when the Root robot nose button (or Create 3 power button) is pressed, when a Stop and Reset packet is received, and when a new Bluetooth connection is made.
 
 <table>
   <tr>
@@ -1380,6 +1393,64 @@ Request a response packet with estimated robot location and orientation.
     <td></td>
   </tr>
 </table>
+
+#### Command 17 - Navigate to Position
+
+Navigate to an coordinate location with an optional end orientation. Robot sends a Navigate to Position Finished response packet with Command 17 and matching ID when finished.
+
+:warning: This command is added in protocol version `1.4`. :warning:
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>17</td>
+    <td>Inc.</td>
+    <td colspan="4">X</td>
+    <td colspan="4">Y</td>
+    <td colspan="2">Heading</td>
+    <td colspan="6"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - X** (int32_t)
+    - X coordinate in millimeters.
+- **Bytes 7:10 - Y** (int32_t)
+    - Y coordinate in millimeters.
+- **Bytes 11:12 - Heading** (int16_t)
+    - Final orientation in decidegrees.
+    - Minimum value of `0`.
+    - Maximum value of `3599`.
+    - Set to `-1` to allow robot to choose final orientation.
 
 #### Command 27 - Drive Arc
 
@@ -1478,10 +1549,29 @@ Response to Drive Distance packet sent after robot has finished driving or inter
     <td>1</td>
     <td>8</td>
     <td>Req.</td>
-    <td colspan="16"></td>
+    <td colspan="4">Timestamp</td>
+    <td colspan="4">X</td>
+    <td colspan="4">Y</td>
+    <td colspan="2">Heading</td>
+    <td colspan="2"></td>
     <td></td>
   </tr>
 </table>
+
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in milliseconds.
+- **Bytes 7:10 - X** (int32_t)
+    - Current X coordinate in millimeters.
+    - Positive X axis extends out the right side of the robot from its initial starting position.
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
+- **Bytes 11:14 - Y** (int32_t)
+    - Current Y coordinate in millimeters.
+    - Positive Y axis extends out the front of the robot from its initial starting position. 
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
+- **Bytes 15:16 - Heading** (int16_t)
+    - Current orientation in decidegrees.
+    - Heading is constrained from `0` to `3599`.
+    - Heading is clockwise negative (Z up) from the robot's initial starting orientation. By default, the robot initially starts at 90 degrees of yaw.
 
 #### Command 12 - Rotate Angle Finished Response
 
@@ -1521,12 +1611,31 @@ Response to Rotate Angle packet sent after robot has finished rotating or interr
     <td>1</td>
     <td>12</td>
     <td>Req.</td>
-    <td colspan="16"></td>
+    <td colspan="4">Timestamp</td>
+    <td colspan="4">X</td>
+    <td colspan="4">Y</td>
+    <td colspan="2">Heading</td>
+    <td colspan="2"></td>
     <td></td>
   </tr>
 </table>
 
-#### Command 16 - Get Position
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in milliseconds.
+- **Bytes 7:10 - X** (int32_t)
+    - Current X coordinate in millimeters.
+    - Positive X axis extends out the right side of the robot from its initial starting position.
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
+- **Bytes 11:14 - Y** (int32_t)
+    - Current Y coordinate in millimeters.
+    - Positive Y axis extends out the front of the robot from its initial starting position. 
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
+- **Bytes 15:16 - Heading** (int16_t)
+    - Current orientation in decidegrees.
+    - Heading is constrained from `0` to `3599`.
+    - Heading is clockwise negative (Z up) from the robot's initial starting orientation. By default, the robot initially starts at 90 degrees of yaw.
+
+#### Command 16 - Get Position Response
 
 Response to Get Position packet with estimated robot location and orientation.
 
@@ -1565,28 +1674,32 @@ Response to Get Position packet with estimated robot location and orientation.
     <td>16</td>
     <td>Req.</td>
     <td colspan="4">Timestamp</td>
-    <td colspan="2">X</td>
-    <td colspan="2">Y</td>
+    <td colspan="4">X</td>
+    <td colspan="4">Y</td>
     <td colspan="2">Heading</td>
-    <td colspan="6"></td>
+    <td colspan="2"></td>
     <td></td>
   </tr>
 </table>
 
 - **Bytes 3:6 - Timestamp** (uint32_t)
     - Timestamp in milliseconds.
-- **Bytes 7:8 - X** (int16_t)
+- **Bytes 7:10 - X** (int32_t)
     - Current X coordinate in millimeters.
     - Positive X axis extends out the right side of the robot from its initial starting position.
-- **Bytes 9:10 - Y** (int16_t)
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
+- **Bytes 11:14 - Y** (int32_t)
     - Current Y coordinate in millimeters.
-    - Positive Y axis extends out the front of the robot from its initial starting position.
-- **Bytes 11:12 - Heading** (int16_t)
+    - Positive Y axis extends out the front of the robot from its initial starting position. 
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
+- **Bytes 15:16 - Heading** (int16_t)
     - Current orientation in decidegrees.
     - Heading is constrained from `0` to `3599`.
-    - Heading is clockwise positive from the robot's initial starting orientation.
+    - Heading is clockwise negative (Z up) from the robot's initial starting orientation. By default, the robot initially starts at 90 degrees of yaw.
 
 #### Command 17 - Navigate to Position Finished Response
+
+:warning: This response is added in protocol version `1.4`. :warning:
 
 Response to Navigate to Position packet sent after robot has finished driving or interrupted by a new movement command.
 
@@ -1624,20 +1737,29 @@ Response to Navigate to Position packet sent after robot has finished driving or
     <td>1</td>
     <td>17</td>
     <td>Req.</td>
-    <td colspan="2">X</td>
-    <td colspan="2">Y</td>
+    <td colspan="4">Timestamp</td>
+    <td colspan="4">X</td>
+    <td colspan="4">Y</td>
     <td colspan="2">Heading</td>
-    <td colspan="10"></td>
+    <td colspan="2"></td>
     <td></td>
   </tr>
 </table>
 
-- **Bytes 3:4 - X** (int16_t)
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in milliseconds.
+- **Bytes 7:10 - X** (int32_t)
     - Current X coordinate in millimeters.
-- **Bytes 5:6 - Y** (int16_t)
+    - Positive X axis extends out the right side of the robot from its initial starting position.
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
+- **Bytes 11:14 - Y** (int32_t)
     - Current Y coordinate in millimeters.
-- **Bytes 7:8 - Heading** (int16_t)
+    - Positive Y axis extends out the front of the robot from its initial starting position. 
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
+- **Bytes 15:16 - Heading** (int16_t)
     - Current orientation in decidegrees.
+    - Heading is constrained from `0` to `3599`.
+    - Heading is clockwise negative (Z up) from the robot's initial starting orientation. By default, the robot initially starts at 90 degrees of yaw.
 
 #### Command 27 - Drive Arc Finished Response
 
@@ -1677,10 +1799,29 @@ Response to Drive Arc packet sent after robot has finished driving or interrupte
     <td>1</td>
     <td>27</td>
     <td>Req.</td>
-    <td colspan="16"></td>
+    <td colspan="4">Timestamp</td>
+    <td colspan="4">X</td>
+    <td colspan="4">Y</td>
+    <td colspan="2">Heading</td>
+    <td colspan="2"></td>
     <td></td>
   </tr>
 </table>
+
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in milliseconds.
+- **Bytes 7:10 - X** (int32_t)
+    - Current X coordinate in millimeters.
+    - Positive X axis extends out the right side of the robot from its initial starting position.
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
+- **Bytes 11:14 - Y** (int32_t)
+    - Current Y coordinate in millimeters.
+    - Positive Y axis extends out the front of the robot from its initial starting position. 
+    - Note that the robot's default starting position is at the origin looking along the positive Y axis in a right-handed coordinate system.
+- **Bytes 15:16 - Heading** (int16_t)
+    - Current orientation in decidegrees.
+    - Heading is constrained from `0` to `3599`.
+    - Heading is clockwise negative (Z up) from the robot's initial starting orientation. By default, the robot initially starts at 90 degrees of yaw.
 
 #### Command 29 - Motor Stall Event
 
@@ -1745,6 +1886,7 @@ Motor has stalled event. The robot sends a Motor Stall Event whenever a stall is
         - `5` - Timeout.
 
 ### Device 2 - Marker/Eraser
+Note: This device is not supported on Create 3.
 
 #### To Robot
 -------------------------------------------------------------------------------
@@ -1921,6 +2063,7 @@ Set LED cross animation type and color.
     - Off is `0`, Full brightness is `255`.
 
 ### Device 4 - Color Sensor
+Note: This device is not supported on Create 3 or RT0.
 
 #### To Robot
 -------------------------------------------------------------------------------
@@ -2486,6 +2629,122 @@ Response to Play Sweep packet sent after robot has finished playing sweep or int
   </tr>
 </table>
 
+### Device 11 - Light Touch
+Note: This device is not supported on Root robots.
+
+#### To Robot
+-------------------------------------------------------------------------------
+
+#### Command 1 - Get Light Touch Values
+
+Request a response packet with Command 1 and matching ID containing values from the light touch sensors.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>1</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
+#### From Robot
+-------------------------------------------------------------------------------
+
+#### Command 1 - Get Light Touch Values Response
+
+Response to Get Light Touch Values packet.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>1</td>
+    <td>Evt.</td>
+    <td colspan="4">Timestamp</td>
+    <td colspan="2">Sensor 0</td>
+    <td colspan="2">Sensor 1</td>
+    <td colspan="2">Sensor 2</td>
+    <td colspan="2">Sensor 3</td>
+    <td colspan="2">Sensor 4</td>
+    <td colspan="2">Sensor 5</td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in units of milliseconds.
+- **Bytes 7:8 - Sensor 0** (uint16_t)
+    - Reflective IR sensor value in units of counts.
+- **Bytes 9:10 - Sensor 1** (uint16_t)
+    - Reflective IR sensor value in units of counts.
+- **Bytes 11:12 - Sensor 2** (uint16_t)
+    - Reflective IR sensor value in units of counts.
+- **Bytes 13:14 - Sensor 3** (uint16_t)
+    - Reflective IR sensor value in units of counts.
+- **Bytes 15:16 - Sensor 4** (uint16_t)
+    - Reflective IR sensor value in units of counts.
+- **Bytes 17:18 - Sensor 5** (uint16_t)
+    - Reflective IR sensor value in units of counts.
+
 ### Device 12 - Bumpers
 
 #### From Robot
@@ -2546,6 +2805,7 @@ Bumper state changed event. The robot sends a Bumper Event whenever one of the b
         - `0xC0` - Both bumpers pressed.
 
 ### Device 13 - Light Sensors
+Note: This device is not supported on Create 3.
 
 #### To Robot
 -------------------------------------------------------------------------------
@@ -2991,7 +3251,7 @@ Touch Sensor changed event. The robot sends a Touch Sensor Event whenever one or
     <td>4</td>
     <td>5</td>
     <td>6</td>
-    <td colspan="2">7</td>
+    <td>7</td>
     <td>8</td>
     <td>9</td>
     <td>10</td>
@@ -3009,7 +3269,7 @@ Touch Sensor changed event. The robot sends a Touch Sensor Event whenever one or
     <th>Dev</th>
     <th>Cmd</th>
     <th>ID</th>
-    <th colspan="17">Payload</th>
+    <th colspan="16">Payload</th>
     <th>CRC</th>
   </tr>
   <tr>
@@ -3018,7 +3278,6 @@ Touch Sensor changed event. The robot sends a Touch Sensor Event whenever one or
     <td>Evt.</td>
     <td colspan="4">Timestamp</td>
     <td>State</td>
-    <td></td>
     <td colspan="11"></td>
     <td></td>
   </tr>
@@ -3037,7 +3296,168 @@ Touch Sensor changed event. The robot sends a Touch Sensor Event whenever one or
         - `RR` - Rear Right sensor.
         - `RL` - Rear Left sensor.
 
+Note that the Create 3 robot maps button 1 (·) to `FL` and button 2 (··) to `FR`.
+
 ### Device 20 - Cliff Sensor
+
+#### To Robot
+-------------------------------------------------------------------------------
+
+#### Command 1 - Get Cliff Threshold
+
+Request a response packet with Command 1 and matching ID containing the cliff threshold.
+
+:warning: This command is in testing and subject to change. :warning:
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>1</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
+
+#### Command 2 - Set Cliff Threshold
+
+Set cliff threshold in mV; this value will not persist when the robot is rebooted.
+
+:warning: This command is in testing and subject to change. :warning:
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>2</td>
+    <td>Inc.</td>
+    <td colspan="2">Threshold</td>
+    <td colspan="14"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:4 - Threshold** (uint16_t)
+    - Cliff threshold in units of millivolts.
+
+#### Command 3 - Get Cliff Value
+
+Request a response packet with Command 3 and matching ID containing the cliff sensor value.
+
+:warning: This command is in testing and subject to change. :warning:
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>3</td>
+    <td>Inc.</td>
+    <td colspan="1">LED</td>
+    <td colspan="1">Format</td>
+    <td colspan="1">Ambient</td>
+    <td colspan="13"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Byte 3 - LED** (uint8_t)
+    - Whether or not the cliff LED should be on during a sample. LED can be one of 2 values:
+        - `0` - LED is off
+        - `1` - LED is on
+- **Byte 4 - Format** (bool)
+    - Set the data format. Format can be one of 2 values:
+        - `0` - 12-bit ADC counts
+        - `1` - millivolts
+- **Byte 5 - Ambient** (bool)
+    - Whether or not ambient subtraction should performed. Ambient subtraction first reads the cliff sensor with the LED off and subtracts this value from the sampled value.
+        - `0` - Ambient subtraction is not performed.
+        - `1` - Ambient subtraction is performed.
 
 #### From Robot
 -------------------------------------------------------------------------------
@@ -3092,13 +3512,363 @@ Cliff detected event. The robot sends a Cliff Event whenever the IR cliff sensor
 - **Bytes 3:6 - Timestamp** (uint32_t)
     - Timestamp in units of milliseconds.
 - **Byte 7 - Cliff** (uint8_t)
-    - Cliff state. Can be one of 2 values:
-        - `0` - No cliff.
-        - `1` - Cliff.
+    - Cliff state. Reads `0` if no cliff; any other value indicates that the robot is experiencing a cliff event.
 - **Bytes 8:9 - Sensor** (uint16_t)
     - Current cliff sensor value in units of millivolts.
 - **Bytes 10:11 - Threshold** (uint16_t)
     - Current cliff sensor threshold in units of millivolts.
+
+#### Command 1 - Get Cliff Threshold Response
+
+Response to Get Cliff Threshold packet.
+
+:warning: This response is in testing and subject to change. :warning:
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>2</td>
+    <td>Req.</td>
+    <td colspan="2">Threshold</td>
+    <td colspan="14"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:4 - Threshold** (uint16_t)
+    - Cliff threshold in units of millivolts.
+
+#### Command 3 - Get Cliff Value Response
+
+Response to Get Cliff Value packet.
+
+:warning: This command is in testing and subject to change. :warning:
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>3</td>
+    <td>Req.</td>
+    <td colspan="4">Timestamp</td>
+    <td colspan="2">Value</td>
+    <td colspan="10"></td>
+    <td></td>
+  </tr>
+</table>
+
+### Device 100 - Connectivity
+Note: this device is not supported on Root robots.
+
+#### To Robot
+-------------------------------------------------------------------------------
+
+#### Command 1 - Get IPv4 Addresses
+
+Request a response packet with Command 1 and matching ID containing the IPv4 addresses of all of the robot's interfaces
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td>1</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
+#### Command 2 - Request Easy Update
+
+Request the robot to, if connected to the Internet, download and install the most recent firmware update from iRobot.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td>2</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
+#### From Robot
+-------------------------------------------------------------------------------
+
+#### Command 0 - IPv4 Change Event
+
+Connection status changed event. The robot sends a connection status event when any of its network interfaces changes state.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td>0</td>
+    <td>Evt.</td>
+    <td colspan="4">wlan0</td>
+    <td colspan="4">wlan1</td>
+    <td colspan="4">usb0</td>
+    <td colspan="4"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - wlan0** (uint32_t)
+    - IPv4 address assigned to wlan0.
+- **Bytes 7:10 - wlan1** (uint32_t)
+    - IPv4 address assigned to wlan1.
+- **Bytes 11:14 - usb0** (uint32_t)
+    - IPv4 address assigned to usb0.
+
+#### Command 1 - Get IPv4 Addresses Response
+
+Response to Get IPv4 Addresses packet.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td>1</td>
+    <td>Inc.</td>
+    <td colspan="4">wlan0</td>
+    <td colspan="4">wlan1</td>
+    <td colspan="4">usb0</td>
+    <td colspan="4"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - wlan0** (uint32_t)
+    - IPv4 address assigned to wlan0.
+- **Bytes 7:10 - wlan1** (uint32_t)
+    - IPv4 address assigned to wlan1.
+- **Bytes 11:14 - usb0** (uint32_t)
+    - IPv4 address assigned to usb0.
+
+#### Command 3 - Easy Update Event
+
+Events for feedback during an easy update.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td>3</td>
+    <td>Evt.</td>
+    <td colspan="4">Timestamp</td>
+    <td colspan="1">Stage</td>
+    <td colspan="1">Percent</td>
+    <td colspan="10"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in units of milliseconds.
+- **Byte 7 - Stage** (uint8_t)
+    - Character indicating what stage of the update the robot is in. Current valid values are:
+        - `d` - downloading
+        - `i` - installing
+- **Byte 8 - Percent** (int8_t)
+    - Percentage of current stage completed (between `0` and `100`, inclusive), or `-1` if there is an error.
 
 ## Example
 
