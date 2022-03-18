@@ -2635,9 +2635,9 @@ Note: This device is not supported on Root robots.
 #### To Robot
 -------------------------------------------------------------------------------
 
-#### Command 1 - Get IR Proximity Values
+#### Command 1 - Get IR Proximity Values with Timestamp
 
-Request a response packet with Command 1 and matching ID containing values from the IR proximity sensors.
+Request a response packet with Command 1 and matching ID containing values from the leftmost six IR proximity sensors.
 
 <table>
   <tr>
@@ -2681,9 +2681,9 @@ Request a response packet with Command 1 and matching ID containing values from 
 #### From Robot
 -------------------------------------------------------------------------------
 
-#### Command 1 - Get IR Proximity Values Response
+#### Command 1 - Get IR Proximity Values with Timestamp Response
 
-Response to Get IR Proximity Values packet.
+Response to Get IR Proximity Values with Timestamp packet.
 
 <table>
   <tr>
