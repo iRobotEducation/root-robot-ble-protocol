@@ -15,7 +15,7 @@
     - [Device 3 - LED Lights](#device-3---led-lights)  
     - [Device 4 - Color Sensor](#device-4---color-sensor)  
     - [Device 5 - Sound](#device-5---sound)  
-    - [Device 11 - Light Touch](#device-11---light-touch)  
+    - [Device 11 - IR Proximity](#device-11---ir-proximity)  
     - [Device 12 - Bumpers](#device-12---bumpers)  
     - [Device 13 - Light Sensors](#device-13---light-sensors)  
     - [Device 14 - Battery](#device-14---battery)  
@@ -2629,15 +2629,15 @@ Response to Play Sweep packet sent after robot has finished playing sweep or int
   </tr>
 </table>
 
-### Device 11 - Light Touch
+### Device 11 - IR Proximity
 Note: This device is not supported on Root robots.
 
 #### To Robot
 -------------------------------------------------------------------------------
 
-#### Command 1 - Get Light Touch Values
+#### Command 1 - Get IR Proximity Values
 
-Request a response packet with Command 1 and matching ID containing values from the light touch sensors.
+Request a response packet with Command 1 and matching ID containing values from the IR proximity sensors.
 
 <table>
   <tr>
@@ -2681,9 +2681,9 @@ Request a response packet with Command 1 and matching ID containing values from 
 #### From Robot
 -------------------------------------------------------------------------------
 
-#### Command 1 - Get Light Touch Values Response
+#### Command 1 - Get IR Proximity Values Response
 
-Response to Get Light Touch Values packet.
+Response to Get IR Proximity Values packet.
 
 <table>
   <tr>
@@ -2733,17 +2733,17 @@ Response to Get Light Touch Values packet.
 - **Bytes 3:6 - Timestamp** (uint32_t)
     - Timestamp in units of milliseconds.
 - **Bytes 7:8 - Sensor 0** (uint16_t)
-    - Reflective IR sensor value in units of counts.
+    - Reflective IR sensor value in units of counts (0-4095 inclusive).
 - **Bytes 9:10 - Sensor 1** (uint16_t)
-    - Reflective IR sensor value in units of counts.
+    - Reflective IR sensor value in units of counts (0-4095 inclusive).
 - **Bytes 11:12 - Sensor 2** (uint16_t)
-    - Reflective IR sensor value in units of counts.
+    - Reflective IR sensor value in units of counts (0-4095 inclusive).
 - **Bytes 13:14 - Sensor 3** (uint16_t)
-    - Reflective IR sensor value in units of counts.
+    - Reflective IR sensor value in units of counts (0-4095 inclusive).
 - **Bytes 15:16 - Sensor 4** (uint16_t)
-    - Reflective IR sensor value in units of counts.
+    - Reflective IR sensor value in units of counts (0-4095 inclusive).
 - **Bytes 17:18 - Sensor 5** (uint16_t)
-    - Reflective IR sensor value in units of counts.
+    - Reflective IR sensor value in units of counts (0-4095 inclusive).
 
 ### Device 12 - Bumpers
 
