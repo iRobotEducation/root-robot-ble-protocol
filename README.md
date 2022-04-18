@@ -2635,6 +2635,76 @@ Note: This device is not supported on Root robots.
 #### To Robot
 -------------------------------------------------------------------------------
 
+
+#### Command 0 - Set Event Thresholds
+
+Set thresholds and shared hysteresis for IR sensors
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>0</td>
+    <td>Inc.</td>
+    <td colspan="2">Hysteresis</td>
+    <td colspan="2">Sensor 0</td>
+    <td colspan="2">Sensor 1</td>
+    <td colspan="2">Sensor 2</td>
+    <td colspan="2">Sensor 3</td>
+    <td colspan="2">Sensor 4</td>
+    <td colspan="2">Sensor 5</td>
+    <td colspan="2">Sensor 6</td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:4 - Hysteresis** (uint16_t)
+    - Hysteresis in units of counts; threshold will trigger on the rising edge at the threshold point, but at the falling edge will not trigger until this number of counts below the threshold value.
+- **Bytes 5:6 - Sensor 0** (uint16_t)
+    - Reflective IR sensor threshold value in units of counts (0-4095 inclusive).
+- **Bytes 7:8 - Sensor 1** (uint16_t)
+    - Reflective IR sensor threshold value in units of counts (0-4095 inclusive).
+- **Bytes 9:10 - Sensor 2** (uint16_t)
+    - Reflective IR sensor threshold value in units of counts (0-4095 inclusive).
+- **Bytes 11:12 - Sensor 3** (uint16_t)
+    - Reflective IR sensor threshold value in units of counts (0-4095 inclusive).
+- **Bytes 13:14 - Sensor 4** (uint16_t)
+    - Reflective IR sensor threshold value in units of counts (0-4095 inclusive).
+- **Bytes 15:16 - Sensor 5** (uint16_t)
+    - Reflective IR sensor threshold value in units of counts (0-4095 inclusive).
+- **Bytes 17:18 - Sensor 6** (uint16_t)
+    - Reflective IR sensor threshold value in units of counts (0-4095 inclusive).
+
+
+
 #### Command 1 - Get IR Proximity Values with Timestamp
 
 Request a response packet with Command 1 and matching ID containing values from the leftmost six IR proximity sensors.
@@ -2678,8 +2748,124 @@ Request a response packet with Command 1 and matching ID containing values from 
   </tr>
 </table>
 
+#### Command 2 - Get IR Proximity Values without Timestamp
+
+Request a response packet with Command 2 and matching ID containing values from all seven IR proximity sensors.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>2</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
 #### From Robot
 -------------------------------------------------------------------------------
+
+#### Command 0 - IR Proximity Event
+
+IR Proximity changed event. The robot sends a IR Proximity event whenever any of the IR Proximity sensors crosses a threshold with hysteresis. Note the sensors are represented as their most significant eight bits.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>0</td>
+    <td>Evt.</td>
+    <td colspan="4">Timestamp</td>
+    <td>State</td>
+    <td>Sensor 0</td>
+    <td>Sensor 1</td>
+    <td>Sensor 2</td>
+    <td>Sensor 3</td>
+    <td>Sensor 4</td>
+    <td>Sensor 5</td>
+    <td>Sensor 6</td>
+    <td colspan="4"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in units of milliseconds.
+- **Byte 7 - State** (uint8_t)
+    - Bitflag for state of triggered/untriggered sensors.
+        - `0` - Sensor is not triggered.
+        - `1` - Sensor is triggered.
+- **Byte 8 - Sensor 0** (uint8_t)
+    - Reflective IR sensor value in units of counts (0-255 inclusive).
+- **Byte 9 - Sensor 1** (uint8_t)
+    - Reflective IR sensor value in units of counts (0-255 inclusive).
+- **Byte 10 - Sensor 2** (uint8_t)
+    - Reflective IR sensor value in units of counts (0-255 inclusive).
+- **Byte 11 - Sensor 3** (uint8_t)
+    - Reflective IR sensor value in units of counts (0-255 inclusive).
+- **Byte 12 - Sensor 4** (uint8_t)
+    - Reflective IR sensor value in units of counts (0-255 inclusive).
+- **Byte 13 - Sensor 5** (uint8_t)
+    - Reflective IR sensor value in units of counts (0-255 inclusive).
+- **Byte 14 - Sensor 6** (uint8_t)
+    - Reflective IR sensor value in units of counts (0-255 inclusive).
 
 #### Command 1 - Get IR Proximity Values with Timestamp Response
 
@@ -2743,6 +2929,71 @@ Response to Get IR Proximity Values with Timestamp packet.
 - **Bytes 15:16 - Sensor 4** (uint16_t)
     - Reflective IR sensor value in units of counts (0-4095 inclusive).
 - **Bytes 17:18 - Sensor 5** (uint16_t)
+    - Reflective IR sensor value in units of counts (0-4095 inclusive).
+
+#### Command 2 - Get IR Proximity Values without Timestamp Response
+
+Response to Get IR Proximity Values without Timestamp packet.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>2</td>
+    <td>Req.</td>
+    <td colspan="2">Sensor 0</td>
+    <td colspan="2">Sensor 1</td>
+    <td colspan="2">Sensor 2</td>
+    <td colspan="2">Sensor 3</td>
+    <td colspan="2">Sensor 4</td>
+    <td colspan="2">Sensor 5</td>
+    <td colspan="2">Sensor 6</td>
+    <td colspan="2"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:4 - Sensor 0** (uint16_t)
+    - Reflective IR sensor value in units of counts (0-4095 inclusive).
+- **Bytes 5:6 - Sensor 1** (uint16_t)
+    - Reflective IR sensor value in units of counts (0-4095 inclusive).
+- **Bytes 7:8 - Sensor 2** (uint16_t)
+    - Reflective IR sensor value in units of counts (0-4095 inclusive).
+- **Bytes 9:10 - Sensor 3** (uint16_t)
+    - Reflective IR sensor value in units of counts (0-4095 inclusive).
+- **Bytes 11:12 - Sensor 4** (uint16_t)
+    - Reflective IR sensor value in units of counts (0-4095 inclusive).
+- **Bytes 13:14 - Sensor 5** (uint16_t)
+    - Reflective IR sensor value in units of counts (0-4095 inclusive).
+- **Bytes 15:16 - Sensor 6** (uint16_t)
     - Reflective IR sensor value in units of counts (0-4095 inclusive).
 
 ### Device 12 - Bumpers
