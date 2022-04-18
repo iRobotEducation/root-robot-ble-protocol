@@ -2638,7 +2638,7 @@ Note: This device is not supported on Root robots.
 
 #### Command 0 - Set Event Thresholds
 
-Set thresholds and shared hysteresis for IR sensors
+Set thresholds and shared hysteresis for IR sensors. This command is only supported in protocol version 1.5 or greater.
 
 <table>
   <tr>
@@ -2707,7 +2707,7 @@ Set thresholds and shared hysteresis for IR sensors
 
 #### Command 1 - Get IR Proximity Values with Timestamp
 
-Request a response packet with Command 1 and matching ID containing values from the leftmost six IR proximity sensors.
+Request a response packet with Command 1 and matching ID containing values from the leftmost six IR proximity sensors. This command is only supported in protocol version 1.4 or greater.
 
 <table>
   <tr>
@@ -2750,7 +2750,7 @@ Request a response packet with Command 1 and matching ID containing values from 
 
 #### Command 2 - Get IR Proximity Values without Timestamp
 
-Request a response packet with Command 2 and matching ID containing values from all seven IR proximity sensors.
+Request a response packet with Command 2 and matching ID containing values from all seven IR proximity sensors. This command is only supported in protocol version 1.5 or greater.
 
 <table>
   <tr>
@@ -2796,7 +2796,7 @@ Request a response packet with Command 2 and matching ID containing values from 
 
 #### Command 0 - IR Proximity Event
 
-IR Proximity changed event. The robot sends a IR Proximity event whenever any of the IR Proximity sensors crosses a threshold with hysteresis. Note the sensors are represented as their most significant eight bits.
+IR Proximity changed event. The robot sends a IR Proximity event whenever any of the IR Proximity sensors crosses a threshold with hysteresis. Note the sensors are represented as their most significant eight bits. This command is only supported in protocol version 1.5 or greater.
 
 <table>
   <tr>
@@ -2869,7 +2869,7 @@ IR Proximity changed event. The robot sends a IR Proximity event whenever any of
 
 #### Command 1 - Get IR Proximity Values with Timestamp Response
 
-Response to Get IR Proximity Values with Timestamp packet.
+Response to Get IR Proximity Values with Timestamp packet. This command is only supported in protocol version 1.4 or greater.
 
 <table>
   <tr>
@@ -2933,7 +2933,7 @@ Response to Get IR Proximity Values with Timestamp packet.
 
 #### Command 2 - Get IR Proximity Values without Timestamp Response
 
-Response to Get IR Proximity Values without Timestamp packet.
+Response to Get IR Proximity Values without Timestamp packet. This command is only supported in protocol version 1.5 or greater.
 
 <table>
   <tr>
