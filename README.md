@@ -165,7 +165,7 @@ A table of main board firmware versions with associated protocol versions is bel
   </tr>
   <tr>
     <td>G.1</td>
-    <td>1.4</td>
+    <td>1.3</td>
   </tr>
   <tr>
     <td>G.0</td>
