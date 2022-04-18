@@ -1453,6 +1453,92 @@ Navigate to an coordinate location with an optional end orientation. Robot sends
     - Maximum value of `3599`.
     - Set to `-1` to allow robot to choose final orientation.
 
+#### Command 19 - Dock
+
+Trigger a docking action. Note: This command is only supported on Create 3 robots with protocol version 1.5 or greater.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>19</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
+#### Command 20 - Undock
+
+Trigger an undocking action. Note: This command is only supported on Create 3 robots with protocol version 1.5 or greater.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>20</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
 #### Command 27 - Drive Arc
 
 Drive the length of an arc defined by a set angle and radius. Robot sends a Drive Arc Finished response packet with Command 27 and matching ID when finished.
@@ -3300,7 +3386,7 @@ Touch Sensor changed event. The robot sends a Touch Sensor Event whenever one or
 Note that the Create 3 robot maps button 1 (·) to `FL` and button 2 (··) to `FR`.
 
 ### Device 19 - Docking Sensors
-Note: This device is not supported on Root Robots.
+Note: This device is not supported on Root Robots. It is only supported in protocol version 1.5 or greater.
 
 #### To Robot
 -------------------------------------------------------------------------------
