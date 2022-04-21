@@ -21,6 +21,7 @@
     - [Device 14 - Battery](#device-14---battery)  
     - [Device 16 - Accelerometer](#device-16---accelerometer)  
     - [Device 17 - Touch Sensors](#device-17---touch-sensors)  
+    - [Device 19 - Docking Sensors](#device-19---docking-sensors)  
     - [Device 20 - Cliff Sensor](#device-20---cliff-sensor)  
     - [Device 100 - Connectivity](#device-100---connectivity)  
 5. [Example](#example)  
@@ -1423,7 +1424,7 @@ Request a response packet with estimated robot location and orientation.
 
 Navigate to an coordinate location with an optional end orientation. Robot sends a Navigate to Position Finished response packet with Command 17 and matching ID when finished.
 
-:warning: This command is added in protocol version `1.4`. :warning:
+Note: This command is only supported with protocol version 1.4 or greater.
 
 <table>
   <tr>
@@ -1476,6 +1477,92 @@ Navigate to an coordinate location with an optional end orientation. Robot sends
     - Minimum value of `0`.
     - Maximum value of `3599`.
     - Set to `-1` to allow robot to choose final orientation.
+
+#### Command 19 - Dock
+
+Trigger a docking action. Note: This command is only supported on Create 3 robots with protocol version 1.5 or greater.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>19</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
+#### Command 20 - Undock
+
+Trigger an undocking action. Note: This command is only supported on Create 3 robots with protocol version 1.5 or greater.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>20</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
 
 #### Command 27 - Drive Arc
 
@@ -1724,7 +1811,7 @@ Response to Get Position packet with estimated robot location and orientation.
 
 #### Command 17 - Navigate to Position Finished Response
 
-:warning: This response is added in protocol version `1.4`. :warning:
+Note: This response is only supported with protocol version 1.4 or greater.
 
 Response to Navigate to Position packet sent after robot has finished driving or interrupted by a new movement command.
 
@@ -1785,6 +1872,122 @@ Response to Navigate to Position packet sent after robot has finished driving or
     - Current orientation in decidegrees.
     - Heading is constrained from `0` to `3599`.
     - Heading is clockwise negative (Z up) from the robot's initial starting orientation. By default, the robot initially starts at 90 degrees of yaw.
+
+#### Command 19 - Dock
+
+Response to docking action trigger, sent after action is complete. Note: This command is only supported on Create 3 robots with protocol version 1.5 or greater.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>19</td>
+    <td>Req.</td>
+    <td colspan="4">Timestamp</td>
+    <td>Status</td>
+    <td>Result</td>
+    <td colspan="10"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in milliseconds.
+- **Byte 7 - Status** (int8_t)
+    - Status code corresponding to ROS 2 Action Status as follows:
+        - `0` - Succeeded
+        - `1` - Aborted
+        - `2` - Canceled
+- **Byte 8 - Result** (int8_t)
+    - Result code corresponding to ROS 2 Action Status as follows:
+        - `0` - Is not docked.
+        - `1` - Is docked.
+
+#### Command 20 - Undock
+
+Response to undocking action trigger, sent after action is complete. Note: This command is only supported on Create 3 robots with protocol version 1.5 or greater.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>19</td>
+    <td>Req.</td>
+    <td colspan="4">Timestamp</td>
+    <td>Status</td>
+    <td>Result</td>
+    <td colspan="10"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in milliseconds.
+- **Byte 7 - Status** (int8_t)
+    - Status code corresponding to ROS 2 Action Status as follows:
+        - `0` - Succeeded
+        - `1` - Aborted
+        - `2` - Canceled
+- **Byte 8 - Result** (int8_t)
+    - Result code corresponding to ROS 2 Action Status as follows:
+        - `0` - Is not docked.
+        - `1` - Is docked.
 
 #### Command 27 - Drive Arc Finished Response
 
@@ -2978,7 +3181,7 @@ Response to Get Light Values packet.
   <tr>
     <td>13</td>
     <td>1</td>
-    <td>Evt.</td>
+    <td>Req.</td>
     <td colspan="4">Timestamp</td>
     <td colspan="2">Left</td>
     <td colspan="2">Right</td>
@@ -3322,6 +3525,180 @@ Touch Sensor changed event. The robot sends a Touch Sensor Event whenever one or
         - `RL` - Rear Left sensor.
 
 Note that the Create 3 robot maps button 1 (·) to `FL` and button 2 (··) to `FR`.
+
+### Device 19 - Docking Sensors
+Note: This device is not supported on Root Robots. It is only supported in protocol version 1.5 or greater.
+
+#### To Robot
+-------------------------------------------------------------------------------
+
+#### Command 1 - Get Docking Values
+
+Request a response packet with Command 1 and matching ID containing values from the docking sensors.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>1</td>
+    <td>Inc.</td>
+    <td colspan="16"></td>
+    <td></td>
+  </tr>
+</table>
+
+#### From Robot
+-------------------------------------------------------------------------------
+
+#### Command 0 - Docking Sensor Event
+
+Docking Sensor changed event. The robot sends a Docking Sensor change event whenever a state from the robot's docking sensors (contacts or IR) is detected.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>0</td>
+    <td>Evt.</td>
+    <td colspan="4">Timestamp</td>
+    <td>Contacts</td>
+    <td>IR Sensor 0</td>
+    <td>IR Sensor 1</td>
+    <td>IR Sensor 2</td>
+    <td colspan="8"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in units of milliseconds.
+- **Byte 7 - Contacts** (uint8_t)
+    - New docking contacts state. Can be one of two values:
+        - `0` - Disconnected from the dock.
+        - `1` - Connected to the dock.
+- **Byte 8 - IR Sensor 0** (uint8_t)
+    - Sensor 0 character received on IR port (halo on Create 3)
+- **Byte 9 - IR Sensor 1** (uint8_t)
+    - Sensor 1 character received on IR port (front docking sensor on Create 3)
+- **Byte 10 - IR Sensor 2** (uint8_t)
+    - Sensor 2 character received on IR port (unused on Create 3)
+
+#### Command 1 - Get Docking Values Response
+
+Response to Get Docking Values packet.
+
+<table>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+    <td>18</td>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th>Dev</th>
+    <th>Cmd</th>
+    <th>ID</th>
+    <th colspan="16">Payload</th>
+    <th>CRC</th>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>1</td>
+    <td>Req.</td>
+    <td colspan="4">Timestamp</td>
+    <td>Contacts</td>
+    <td>IR Sensor 0</td>
+    <td>IR Sensor 1</td>
+    <td>IR Sensor 2</td>
+    <td colspan="8"></td>
+    <td></td>
+  </tr>
+</table>
+
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in units of milliseconds.
+- **Byte 7 - Contacts** (uint8_t)
+    - New docking contacts state. Can be one of two values:
+        - `0` - Disconnected from the dock.
+        - `1` - Connected to the dock.
+- **Byte 8 - IR Sensor 0** (uint8_t)
+    - Sensor 0 character received on IR port (halo on Create 3)
+- **Byte 9 - IR Sensor 1** (uint8_t)
+    - Sensor 1 character received on IR port (front docking sensor on Create 3)
+- **Byte 10 - IR Sensor 2** (uint8_t)
+    - Sensor 2 character received on IR port (unused on Create 3)
 
 ### Device 20 - Cliff Sensor
 
