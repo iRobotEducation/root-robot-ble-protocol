@@ -146,7 +146,32 @@ A table of main board firmware versions with associated protocol versions is bel
   </tr>
 </table>
 
-Note that the first version of the protocol that the Create 3 robot will support is `1.4`.
+The current BLE protocol version supported on Create 3 is `1.4`.
+(`1.5` is planned but not yet released.)
+A table of main board firmware versions with associated protocol versions is below:
+
+<table>
+  <tr>
+    <th>Firmware Version</th>
+    <th>Protocol Version</th>
+  </tr>
+  <tr>
+    <td>G.3</td>
+    <td>1.5</td>
+  </tr>
+  <tr>
+    <td>G.2</td>
+    <td>1.4</td>
+  </tr>
+  <tr>
+    <td>G.1</td>
+    <td>1.3</td>
+  </tr>
+  <tr>
+    <td>G.0</td>
+    <td>1.3</td>
+  </tr>
+</table>
 
 ## Packet Components
 
