@@ -2678,7 +2678,7 @@ Request a response packet with Command 1 and matching ID containing values from 
   </tr>
 </table>
 
-#### Command 2 - Get IR Proximity Values without Timestamp
+#### Command 2 - Get Packed IR Proximity Values and States
 
 Request a response packet with Command 2 and matching ID containing values from all seven IR proximity sensors. This command is only supported in protocol version 1.5 or greater.
 
@@ -2836,7 +2836,7 @@ Request a response packet with Command 4 and matching ID containing thresholds a
 
 #### Command 0 - IR Proximity Event
 
-IR Proximity changed event. The robot sends a IR Proximity event whenever any of the IR Proximity sensors crosses a threshold with hysteresis. Note the sensors are represented as their most significant eight bits. This command is only supported in protocol version 1.5 or greater.
+IR Proximity changed event. The robot sends a IR Proximity event whenever any of the IR Proximity sensors crosses a threshold with hysteresis. The sensors return 12-bit values, which are packed as described. This command is only supported in protocol version 1.5 or greater.
 
 <table>
   <tr>
@@ -2874,14 +2874,17 @@ IR Proximity changed event. The robot sends a IR Proximity event whenever any of
     <td>Evt.</td>
     <td colspan="4">Timestamp</td>
     <td>State</td>
-    <td>Sensor 0</td>
-    <td>Sensor 1</td>
-    <td>Sensor 2</td>
-    <td>Sensor 3</td>
-    <td>Sensor 4</td>
-    <td>Sensor 5</td>
-    <td>Sensor 6</td>
-    <td colspan="4"></td>
+    <td>Sensor 0 MSB</td>
+    <td>Sensor 1 MSB</td>
+    <td>Sensor 2 MSB</td>
+    <td>Sensor 3 MSB</td>
+    <td>Sensor 4 MSB</td>
+    <td>Sensor 5 MSB</td>
+    <td>Sensor 6 MSB</td>
+    <td>Sensor 0+1 LSN</td>
+    <td>Sensor 2+3 LSN</td>
+    <td>Sensor 4+5 LSN</td>
+    <td>Sensor 6 LSN</td>
     <td></td>
   </tr>
 </table>
@@ -2892,20 +2895,28 @@ IR Proximity changed event. The robot sends a IR Proximity event whenever any of
     - Bitflag for state of triggered/untriggered sensors.
         - `0` - Sensor is not triggered.
         - `1` - Sensor is triggered.
-- **Byte 8 - Sensor 0** (uint8_t)
-    - Reflective IR sensor value in units of counts (0-255 inclusive).
-- **Byte 9 - Sensor 1** (uint8_t)
-    - Reflective IR sensor value in units of counts (0-255 inclusive).
-- **Byte 10 - Sensor 2** (uint8_t)
-    - Reflective IR sensor value in units of counts (0-255 inclusive).
-- **Byte 11 - Sensor 3** (uint8_t)
-    - Reflective IR sensor value in units of counts (0-255 inclusive).
-- **Byte 12 - Sensor 4** (uint8_t)
-    - Reflective IR sensor value in units of counts (0-255 inclusive).
-- **Byte 13 - Sensor 5** (uint8_t)
-    - Reflective IR sensor value in units of counts (0-255 inclusive).
-- **Byte 14 - Sensor 6** (uint8_t)
-    - Reflective IR sensor value in units of counts (0-255 inclusive).
+- **Byte 8 - Sensor 0 MSB** (uint8_t)
+    - High eight bits of reflective IR sensor value.
+- **Byte 9 - Sensor 1 MSB** (uint8_t)
+    - High eight bits of reflective IR sensor value.
+- **Byte 10 - Sensor 2 MSB** (uint8_t)
+    - High eight bits of reflective IR sensor value.
+- **Byte 11 - Sensor 3 MSB** (uint8_t)
+    - High eight bits of reflective IR sensor value.
+- **Byte 12 - Sensor 4 MSB** (uint8_t)
+    - High eight bits of reflective IR sensor value.
+- **Byte 13 - Sensor 5 MSB** (uint8_t)
+    - High eight bits of reflective IR sensor value.
+- **Byte 14 - Sensor 6 MSB** (uint8_t)
+    - High eight bits of reflective IR sensor value.
+- **Byte 15 - Sensor 0+1 LSNs** (uint8_t)
+    - Low four bits of reflective IR sensor values; sensor 0 in lower nibble, sensor 1 in higher nibble.
+- **Byte 16 - Sensor 2+3 LSNs** (uint8_t)
+    - Low four bits of reflective IR sensor values; sensor 2 in lower nibble, sensor 3 in higher nibble.
+- **Byte 17 - Sensor 4+5 LSNs** (uint8_t)
+    - Low four bits of reflective IR sensor values; sensor 4 in lower nibble, sensor 5 in higher nibble.
+- **Byte 18 - Sensor 6 LSN** (uint8_t)
+    - Low four bits of reflective IR sensor values; sensor 6 in lower nibble.
 
 #### Command 1 - Get IR Proximity Values with Timestamp Response
 
@@ -2971,9 +2982,9 @@ Response to Get IR Proximity Values with Timestamp packet. This command is only 
 - **Bytes 17:18 - Sensor 5** (uint16_t)
     - Reflective IR sensor value in units of counts (0-4095 inclusive).
 
-#### Command 2 - Get IR Proximity Values without Timestamp Response
+#### Command 2 - Get Packed IR Proximity Values and States Response
 
-Response to Get IR Proximity Values without Timestamp packet. This command is only supported in protocol version 1.5 or greater.
+Response to Get Packed IR Proximity Values and States packet. The sensors return 12-bit values, which are packed as described. This command is only supported in protocol version 1.5 or greater.
 
 <table>
   <tr>
@@ -3007,34 +3018,53 @@ Response to Get IR Proximity Values without Timestamp packet. This command is on
   </tr>
   <tr>
     <td>11</td>
-    <td>2</td>
-    <td>Req.</td>
-    <td colspan="2">Sensor 0</td>
-    <td colspan="2">Sensor 1</td>
-    <td colspan="2">Sensor 2</td>
-    <td colspan="2">Sensor 3</td>
-    <td colspan="2">Sensor 4</td>
-    <td colspan="2">Sensor 5</td>
-    <td colspan="2">Sensor 6</td>
-    <td colspan="2"></td>
+    <td>0</td>
+    <td>Evt.</td>
+    <td colspan="4">Timestamp</td>
+    <td>State</td>
+    <td>Sensor 0 MSB</td>
+    <td>Sensor 1 MSB</td>
+    <td>Sensor 2 MSB</td>
+    <td>Sensor 3 MSB</td>
+    <td>Sensor 4 MSB</td>
+    <td>Sensor 5 MSB</td>
+    <td>Sensor 6 MSB</td>
+    <td>Sensor 0+1 LSN</td>
+    <td>Sensor 2+3 LSN</td>
+    <td>Sensor 4+5 LSN</td>
+    <td>Sensor 6 LSN</td>
     <td></td>
   </tr>
 </table>
 
-- **Bytes 3:4 - Sensor 0** (uint16_t)
-    - Reflective IR sensor value in units of counts (0-4095 inclusive).
-- **Bytes 5:6 - Sensor 1** (uint16_t)
-    - Reflective IR sensor value in units of counts (0-4095 inclusive).
-- **Bytes 7:8 - Sensor 2** (uint16_t)
-    - Reflective IR sensor value in units of counts (0-4095 inclusive).
-- **Bytes 9:10 - Sensor 3** (uint16_t)
-    - Reflective IR sensor value in units of counts (0-4095 inclusive).
-- **Bytes 11:12 - Sensor 4** (uint16_t)
-    - Reflective IR sensor value in units of counts (0-4095 inclusive).
-- **Bytes 13:14 - Sensor 5** (uint16_t)
-    - Reflective IR sensor value in units of counts (0-4095 inclusive).
-- **Bytes 15:16 - Sensor 6** (uint16_t)
-    - Reflective IR sensor value in units of counts (0-4095 inclusive).
+- **Bytes 3:6 - Timestamp** (uint32_t)
+    - Timestamp in units of milliseconds.
+- **Byte 7 - State** (uint8_t)
+    - Bitflag for state of triggered/untriggered sensors.
+        - `0` - Sensor is not triggered.
+        - `1` - Sensor is triggered.
+- **Byte 8 - Sensor 0 MSB** (uint8_t)
+    - High eight bits of reflective IR sensor value.
+- **Byte 9 - Sensor 1 MSB** (uint8_t)
+    - High eight bits of reflective IR sensor value.
+- **Byte 10 - Sensor 2 MSB** (uint8_t)
+    - High eight bits of reflective IR sensor value.
+- **Byte 11 - Sensor 3 MSB** (uint8_t)
+    - High eight bits of reflective IR sensor value.
+- **Byte 12 - Sensor 4 MSB** (uint8_t)
+    - High eight bits of reflective IR sensor value.
+- **Byte 13 - Sensor 5 MSB** (uint8_t)
+    - High eight bits of reflective IR sensor value.
+- **Byte 14 - Sensor 6 MSB** (uint8_t)
+    - High eight bits of reflective IR sensor value.
+- **Byte 15 - Sensor 0+1 LSNs** (uint8_t)
+    - Low four bits of reflective IR sensor values; sensor 0 in lower nibble, sensor 1 in higher nibble.
+- **Byte 16 - Sensor 2+3 LSNs** (uint8_t)
+    - Low four bits of reflective IR sensor values; sensor 2 in lower nibble, sensor 3 in higher nibble.
+- **Byte 17 - Sensor 4+5 LSNs** (uint8_t)
+    - Low four bits of reflective IR sensor values; sensor 4 in lower nibble, sensor 5 in higher nibble.
+- **Byte 18 - Sensor 6 LSN** (uint8_t)
+    - Low four bits of reflective IR sensor values; sensor 6 in lower nibble.
 
 #### Command 4 - Get Event Thresholds Response
 
