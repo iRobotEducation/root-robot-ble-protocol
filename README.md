@@ -3018,8 +3018,8 @@ Response to Get Packed IR Proximity Values and States packet. The sensors return
   </tr>
   <tr>
     <td>11</td>
-    <td>0</td>
-    <td>Evt.</td>
+    <td>2</td>
+    <td>Req.</td>
     <td colspan="4">Timestamp</td>
     <td>State</td>
     <td>Sensor 0 MSB</td>
