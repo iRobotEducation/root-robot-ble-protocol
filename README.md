@@ -2760,13 +2760,13 @@ Set thresholds and shared hysteresis for IR sensors. This command is only suppor
     <td>3</td>
     <td>Inc.</td>
     <td colspan="2">Hysteresis</td>
-    <td colspan="2">Sensor 0</td>
-    <td colspan="2">Sensor 1</td>
-    <td colspan="2">Sensor 2</td>
-    <td colspan="2">Sensor 3</td>
-    <td colspan="2">Sensor 4</td>
-    <td colspan="2">Sensor 5</td>
-    <td colspan="2">Sensor 6</td>
+    <td colspan="2">Sensor&nbsp;0</td>
+    <td colspan="2">Sensor&nbsp;1</td>
+    <td colspan="2">Sensor&nbsp;2</td>
+    <td colspan="2">Sensor&nbsp;3</td>
+    <td colspan="2">Sensor&nbsp;4</td>
+    <td colspan="2">Sensor&nbsp;5</td>
+    <td colspan="2">Sensor&nbsp;6</td>
     <td></td>
   </tr>
 </table>
@@ -2961,12 +2961,12 @@ Response to Get IR Proximity Values with Timestamp packet. This command is only 
     <td>1</td>
     <td>Req.</td>
     <td colspan="4">Timestamp</td>
-    <td colspan="2">Sensor 0</td>
-    <td colspan="2">Sensor 1</td>
-    <td colspan="2">Sensor 2</td>
-    <td colspan="2">Sensor 3</td>
-    <td colspan="2">Sensor 4</td>
-    <td colspan="2">Sensor 5</td>
+    <td colspan="2">Sensor&nbsp;0</td>
+    <td colspan="2">Sensor&nbsp;1</td>
+    <td colspan="2">Sensor&nbsp;2</td>
+    <td colspan="2">Sensor&nbsp;3</td>
+    <td colspan="2">Sensor&nbsp;4</td>
+    <td colspan="2">Sensor&nbsp;5</td>
     <td></td>
   </tr>
 </table>
@@ -3113,13 +3113,13 @@ Response packet for Get Event Thresholds containing thresholds and shared hyster
     <td>4</td>
     <td>Req.</td>
     <td colspan="2">Hysteresis</td>
-    <td colspan="2">Sensor 0</td>
-    <td colspan="2">Sensor 1</td>
-    <td colspan="2">Sensor 2</td>
-    <td colspan="2">Sensor 3</td>
-    <td colspan="2">Sensor 4</td>
-    <td colspan="2">Sensor 5</td>
-    <td colspan="2">Sensor 6</td>
+    <td colspan="2">Sensor&nbsp;0</td>
+    <td colspan="2">Sensor&nbsp;1</td>
+    <td colspan="2">Sensor&nbsp;2</td>
+    <td colspan="2">Sensor&nbsp;3</td>
+    <td colspan="2">Sensor&nbsp;4</td>
+    <td colspan="2">Sensor&nbsp;5</td>
+    <td colspan="2">Sensor&nbsp;6</td>
     <td></td>
   </tr>
 </table>
