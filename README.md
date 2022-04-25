@@ -2855,17 +2855,17 @@ IR Proximity changed event. The robot sends a IR Proximity event whenever any of
     <td>12</td>
     <td>13</td>
     <td>14</td>
-    <td>15</td>
-    <td>16</td>
-    <td>17</td>
-    <td>18</td>
+    <td colspan="2">15</td>
+    <td colspan="2">16</td>
+    <td colspan="2">17</td>
+    <td colspan="2">18</td>
     <td>19</td>
   </tr>
   <tr>
     <th>Dev</th>
     <th>Cmd</th>
     <th>ID</th>
-    <th colspan="16">Payload</th>
+    <th colspan="20">Payload</th>
     <th>CRC</th>
   </tr>
   <tr>
@@ -2881,10 +2881,14 @@ IR Proximity changed event. The robot sends a IR Proximity event whenever any of
     <td>Sensor 4 MSB</td>
     <td>Sensor 5 MSB</td>
     <td>Sensor 6 MSB</td>
-    <td>Sensor 0+1 LSN</td>
-    <td>Sensor 2+3 LSN</td>
-    <td>Sensor 4+5 LSN</td>
+    <td>Sensor 0 LSN</td>
+    <td>Sensor 1 LSN</td>
+    <td>Sensor 2 LSN</td>
+    <td>Sensor 3 LSN</td>
+    <td>Sensor 4 LSN</td>
+    <td>Sensor 5 LSN</td>
     <td>Sensor 6 LSN</td>
+    <td></td>
     <td></td>
   </tr>
 </table>
@@ -2910,13 +2914,13 @@ IR Proximity changed event. The robot sends a IR Proximity event whenever any of
 - **Byte 14 - Sensor 6 MSB** (uint8_t)
     - High eight bits of reflective IR sensor value.
 - **Byte 15 - Sensor 0+1 LSNs** (uint8_t)
-    - Low four bits of reflective IR sensor values; sensor 0 in lower nibble, sensor 1 in higher nibble.
+    - Low four bits of reflective IR sensor values; sensor 0 in upper nibble, sensor 1 in lower nibble.
 - **Byte 16 - Sensor 2+3 LSNs** (uint8_t)
-    - Low four bits of reflective IR sensor values; sensor 2 in lower nibble, sensor 3 in higher nibble.
+    - Low four bits of reflective IR sensor values; sensor 2 in upper nibble, sensor 3 in lower nibble.
 - **Byte 17 - Sensor 4+5 LSNs** (uint8_t)
-    - Low four bits of reflective IR sensor values; sensor 4 in lower nibble, sensor 5 in higher nibble.
+    - Low four bits of reflective IR sensor values; sensor 4 in upper nibble, sensor 5 in lower nibble.
 - **Byte 18 - Sensor 6 LSN** (uint8_t)
-    - Low four bits of reflective IR sensor values; sensor 6 in lower nibble.
+    - Low four bits of reflective IR sensor values; sensor 6 in upper nibble, lower nibble is undefined.
 
 #### Command 1 - Get IR Proximity Values with Timestamp Response
 
@@ -3003,17 +3007,17 @@ Response to Get Packed IR Proximity Values and States packet. The sensors return
     <td>12</td>
     <td>13</td>
     <td>14</td>
-    <td>15</td>
-    <td>16</td>
-    <td>17</td>
-    <td>18</td>
+    <td colspan="2">15</td>
+    <td colspan="2">16</td>
+    <td colspan="2">17</td>
+    <td colspan="2">18</td>
     <td>19</td>
   </tr>
   <tr>
     <th>Dev</th>
     <th>Cmd</th>
     <th>ID</th>
-    <th colspan="16">Payload</th>
+    <th colspan="20">Payload</th>
     <th>CRC</th>
   </tr>
   <tr>
@@ -3029,10 +3033,14 @@ Response to Get Packed IR Proximity Values and States packet. The sensors return
     <td>Sensor 4 MSB</td>
     <td>Sensor 5 MSB</td>
     <td>Sensor 6 MSB</td>
-    <td>Sensor 0+1 LSN</td>
-    <td>Sensor 2+3 LSN</td>
-    <td>Sensor 4+5 LSN</td>
+    <td>Sensor 0 LSN</td>
+    <td>Sensor 1 LSN</td>
+    <td>Sensor 2 LSN</td>
+    <td>Sensor 3 LSN</td>
+    <td>Sensor 4 LSN</td>
+    <td>Sensor 5 LSN</td>
     <td>Sensor 6 LSN</td>
+    <td></td>
     <td></td>
   </tr>
 </table>
@@ -3058,13 +3066,13 @@ Response to Get Packed IR Proximity Values and States packet. The sensors return
 - **Byte 14 - Sensor 6 MSB** (uint8_t)
     - High eight bits of reflective IR sensor value.
 - **Byte 15 - Sensor 0+1 LSNs** (uint8_t)
-    - Low four bits of reflective IR sensor values; sensor 0 in lower nibble, sensor 1 in higher nibble.
+    - Low four bits of reflective IR sensor values; sensor 0 in upper nibble, sensor 1 in lower nibble.
 - **Byte 16 - Sensor 2+3 LSNs** (uint8_t)
-    - Low four bits of reflective IR sensor values; sensor 2 in lower nibble, sensor 3 in higher nibble.
+    - Low four bits of reflective IR sensor values; sensor 2 in upper nibble, sensor 3 in lower nibble.
 - **Byte 17 - Sensor 4+5 LSNs** (uint8_t)
-    - Low four bits of reflective IR sensor values; sensor 4 in lower nibble, sensor 5 in higher nibble.
+    - Low four bits of reflective IR sensor values; sensor 4 in upper nibble, sensor 5 in lower nibble.
 - **Byte 18 - Sensor 6 LSN** (uint8_t)
-    - Low four bits of reflective IR sensor values; sensor 6 in lower nibble.
+    - Low four bits of reflective IR sensor values; sensor 6 in upper nibble, lower nibble is undefined.
 
 #### Command 4 - Get Event Thresholds Response
 
