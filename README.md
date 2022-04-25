@@ -2187,7 +2187,7 @@ Response to Get Color Sensor Data packet.
 
 - **Byte 3:18 - Data** (uint16_t)
     - Eight 16-bit color sensor values.
-    - For the sensors left to right in the bank selected by the Get Color Data packet.
+    - For the sensors left to right in the bank selected by the Get Color Data packet. The value in bytes 3-4 is leftmost.
     - In the format selected by the Get Color Data packet.
 
 #### Command 2 - Color Sensor Event
@@ -2228,45 +2228,45 @@ Detected new color event. The robot sends a Color Sensor Event whenever one of t
     <td>4</td>
     <td>2</td>
     <td>Evt.</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
-    <td>Color</td>
+    <td>Sensor&nbsp;0 Color</td>
+    <td>Sensor&nbsp;1 Color</td>
+    <td>Sensor&nbsp;2 Color</td>
+    <td>Sensor&nbsp;3 Color</td>
+    <td>Sensor&nbsp;4 Color</td>
+    <td>Sensor&nbsp;5 Color</td>
+    <td>Sensor&nbsp;6 Color</td>
+    <td>Sensor&nbsp;7 Color</td>
+    <td>Sensor&nbsp;8 Color</td>
+    <td>Sensor&nbsp;9 Color</td>
+    <td>Sensor&nbsp;10 Color</td>
+    <td>Sensor&nbsp;11 Color</td>
+    <td>Sensor&nbsp;12 Color</td>
+    <td>Sensor&nbsp;13 Color</td>
+    <td>Sensor&nbsp;14 Color</td>
+    <td>Sensor&nbsp;15 Color</td>
+    <td>Sensor&nbsp;16 Color</td>
+    <td>Sensor&nbsp;17 Color</td>
+    <td>Sensor&nbsp;18 Color</td>
+    <td>Sensor&nbsp;19 Color</td>
+    <td>Sensor&nbsp;20 Color</td>
+    <td>Sensor&nbsp;21 Color</td>
+    <td>Sensor&nbsp;22 Color</td>
+    <td>Sensor&nbsp;23 Color</td>
+    <td>Sensor&nbsp;24 Color</td>
+    <td>Sensor&nbsp;25 Color</td>
+    <td>Sensor&nbsp;26 Color</td>
+    <td>Sensor&nbsp;27 Color</td>
+    <td>Sensor&nbsp;28 Color</td>
+    <td>Sensor&nbsp;29 Color</td>
+    <td>Sensor&nbsp;30 Color</td>
+    <td>Sensor&nbsp;31 Color</td>
     <td></td>
   </tr>
 </table>
 
 - **Nibbles 6:37 - Color** (uint4_t)
     - 32 4-bit identified color values.
-    - In order from left to right, sensor 0 to sensor 31.
+    - In order from left to right, sensor 0 to sensor 31. To clarify, byte 3 is "leftmost," and upper nibbles are considered "to the left" of lower nibbles.
     - Color can have one of 5 values; other values are undefined and treated as white:
         - `0` - White
         - `1` - Black
