@@ -202,7 +202,7 @@ The content of the packet payload can be up to 16 bytes. Any unused bytes in the
 
 **Checksum** (1 byte)
 
-The last byte of each packet is a checksum calculated from the previous 19 bytes. This is used to check data integrity. The Root Robot uses a CRC-8 algorithm. An implementation of the CRC-8 checksum calculation can be seen [here](crc/crc.h) and [here](crc/crc.c). A checksum value of zero is always accepted by the robot if a data integrity check is not needed.
+The last byte of each packet is a checksum calculated from the previous 19 bytes. This is used to check data integrity. The Root Robot uses a CRC-8 algorithm. An implementation of the CRC-8 checksum calculation can be seen [here](crc/crc.h) and [here](crc/crc.c).
 
 Example packet:
 <table>
