@@ -3536,9 +3536,9 @@ Ambient light changed event. The robot sends a Light Event whenever a new ambien
         - `6` - Left eye brighter than right eye.
         - `7` - Both eyes bright.
 - **Bytes 8:9 - Left** (uint16_t)
-    - Left eye ambient light level in units of millivolts.
+    - Left eye ambient light level in units of decipercent (0-1000 inclusive).
 - **Bytes 10:11 - Right** (uint16_t)
-    - Right eye ambient light level in units of millivolts.
+    - Right eye ambient light level in units of decipercent (0-1000 inclusive).
 
 #### Command 1 - Get Light Values Response
 
@@ -3589,9 +3589,9 @@ Response to Get Light Values packet.
 - **Bytes 3:6 - Timestamp** (uint32_t)
     - Timestamp in units of milliseconds.
 - **Bytes 7:8 - Left** (uint16_t)
-    - Left eye ambient light level in units of millivolts.
+    - Left eye ambient light level in units of decipercent (0-1000 inclusive).
 - **Bytes 9:10 - Right** (uint16_t)
-    - Right eye ambient light level in units of millivolts.
+    - Right eye ambient light level in units of decipercent (0-1000 inclusive).
 
 ### Device 14 - Battery
 
