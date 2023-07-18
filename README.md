@@ -147,14 +147,21 @@ A table of main board firmware versions with associated protocol versions is bel
   </tr>
 </table>
 
-The current BLE protocol version supported on Create 3 is `1.4`.
-(`1.5` is planned but not yet released.)
+The current BLE protocol version supported on Create 3 is `1.5`.
 A table of main board firmware versions with associated protocol versions is below:
 
 <table>
   <tr>
     <th>Firmware Version</th>
     <th>Protocol Version</th>
+  </tr>
+  <tr>
+    <td>G.5 / H.2</td>
+    <td>1.5</td>
+  </tr>
+  <tr>
+    <td>G.4 / H.1</td>
+    <td>1.5</td>
   </tr>
   <tr>
     <td>G.3</td>
