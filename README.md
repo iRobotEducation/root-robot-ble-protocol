@@ -1338,7 +1338,7 @@ Set the amount of correction used during vertical driving and when gravity compe
 - **Bytes 4:5 - Amount** (uint16_t)
     - Amount in units of decipercent
     - Minimum value is 0 for 0% (equivalent to always off)
-    - Maximum value is 3000 for 300%
+    - Maximum value is 1000 for 100%
     - Default value is 500 for 50%
 
 #### Command 15 - Reset Position
