@@ -90,6 +90,7 @@ Before connection, the robot will broadcast an advertising packet and scan respo
 
 The current BLE protocol version supported on Root is `1.3`.
 (`1.4` is planned but not yet released.)
+Access [this site](https://code.irobot.com/update/index.html) to update to the most recent firmware version.
 A table of main board firmware versions with associated protocol versions is below:
 
 <table>
@@ -152,6 +153,7 @@ A table of main board firmware versions with associated protocol versions is bel
 </table>
 
 The current BLE protocol version supported on Create 3 is `1.5`.
+Access [this site](https://iroboteducation.github.io/create3_docs/webserver/update/) to learn how to update the Create 3 robot.
 A table of main board firmware versions with associated protocol versions is below:
 
 <table>
