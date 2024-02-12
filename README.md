@@ -98,6 +98,10 @@ A table of main board firmware versions with associated protocol versions is bel
     <th>Protocol Version</th>
   </tr>
   <tr>
+    <td>2.7</td>
+    <td>1.3</td>
+  </tr>
+  <tr>
     <td>2.3</td>
     <td>1.3</td>
   </tr>
